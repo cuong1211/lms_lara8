@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function zoom(){
         return $this->belongsTo(Zoom::class);
     }
+    public function classes(){
+        return $this->hasMany(Classes::class);
+    }
+    
 }

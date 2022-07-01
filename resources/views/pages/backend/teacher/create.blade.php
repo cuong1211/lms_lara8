@@ -35,7 +35,10 @@
                 </div>
                 <div class="form-group">
                     <label for="example-date">HÌNH ẢNH</label>
-                    <input type="file" id="example-fileinput" class="form-control-file" name="avatar">
+                    <br>
+                    <input type="file"  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" name="avatar">
+                    <br>
+                    <img id="blah" width="100" height="100"/>
                 </div>
                 <div class="form-group">
                     <input hidden type="text" id="simpleinput" class="form-control" name="status" value="0">

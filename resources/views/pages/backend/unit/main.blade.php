@@ -8,13 +8,23 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <a href="{{ url('/admin/course') . '/' . $course->id . '/createunit' }}"
-                                    class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">ADD THÊM</i></a>
+                                    class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM BÀI HỌC</i></a>
                             </div>
                         </div>
                     </form>
                 </div>
                 <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
                 <h4 class="page-title">BÀI HỌC</h4>
+                <div class="page-title-right">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <a href="{{ url('/admin/course') . '/' . $course->id . '/slide' }}"
+                                    class="btn btn-dark">SLIDE</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -45,7 +55,8 @@
                                 @if ($item->slide_id == null)
                                     Không có
                                 @else
-                                    {{ $item->slide->link }}
+                                    <a href="{{ $item->slide->link }}"><button type="button" class="btn btn-info">Truy
+                                            cập</button></a>
                                 @endif
                             </td>
                             <td>
@@ -62,8 +73,10 @@
                                 @endif
                             </td>
                             <td class="table-action">
-                                <a href="{{url('/admin/course').'/'.$course->id.('/unit').'/'.$item->id.'/edit'}}" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                <a href="{{url('/admin/course').'/'.$course->id.('/unit'.'/'.$item->id.'/delete')}}" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                <a href="{{ url('/admin/course') . '/' . $course->id . '/unit' . '/' . $item->id . '/edit' }}"
+                                    class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                                <a href="{{ url('/admin/course') . '/' . $course->id . ('/unit' . '/' . $item->id . '/delete') }}"
+                                    class="action-icon"> <i class="mdi mdi-delete"></i></a>
                             </td>
                         </tr>
                         @php

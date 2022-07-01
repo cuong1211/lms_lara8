@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <form class="form-horizontal" action="{{ url('/admin/createcourse') }}" method="POST" enctype="multipart/form-data"> 
+            <form class="form-horizontal" action="{{ url('/admin/createcourse') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="simpleinput">TÊN KHOÁ HỌC</label>
@@ -23,7 +23,10 @@
                 </div>
                 <div class="form-group">
                     <label for="example-date">HÌNH ẢNH</label>
-                    <input type="file" id="example-fileinput" class="form-control-file" name="img">
+                    <br>
+                    <input type="file"  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" name="img">
+                    <br>
+                    <img id="blah" width="491" height="246"/>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-dark">ADD</button>

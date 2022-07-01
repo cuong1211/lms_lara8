@@ -25,7 +25,6 @@
                         <th>AVATAR</th>
                         <th>TÊN</th>
                         <th>EMAIL</th>
-                        <th>CHỨC VỤ</th>
                         <th>TRẠNG THÁI</th>
                         <th>ACTION</th>
                     </tr>
@@ -41,13 +40,6 @@
                             <td></td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->email}}</td>
-                            <td>
-                                @if($item->role->name === Null)
-                                    <span class="badge badge-success">Không có chức vụ</span>
-                                @else
-                                    {{$item->role->name}}
-                                @endif
-                            </td>
                             <td>
                                 @if ($item->status == 1)
                                     <span class="badge badge-success">Hoạt động</span>

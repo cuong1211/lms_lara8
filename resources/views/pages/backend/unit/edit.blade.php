@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="iq-card-body">
-            <form class="form-horizontal" action="{{ url('/admin/course') . '/' . $course->id . '/edit' }}" method="POST">
+            <form class="form-horizontal" action="{{ url('/admin/course') . '/' . $course->id . ('/unit').'/'.$unit->id.('/edit') }}" method="POST">
                 @csrf
                 <div class="form-group row">
                     <label class="control-label col-sm-2 align-self-center mb-0" for="email">Tên bài:</label>

@@ -24,6 +24,8 @@
                         <th>STT</th>
                         <th>TÊN KHOÁ HỌC</th>
                         <th>THỜI GIAN</th>
+                        <th>TÀI NGUYÊN</th>
+                        <th>LỚP</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -35,9 +37,16 @@
                     @foreach ($course as $item)
                         <tr>
                             <td>{{ $count }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->start_time}}</td>
                             <td>
                                 <a href="{{url('/admin/course').'/'.$item->id.'/unit'}}">
-                                    {{ $item->name }}
+                                    <button type="button" class="btn btn-primary"><span>TRUY CẬP</span> </button>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{url('/admin/course').'/'.$item->id.'/class'}}">
+                                    <button type="button" class="btn btn-primary"><span>TRUY CẬP</span> </button>
                                 </a>
                             </td>
                             <td>{{ $item->start_time }}</td>

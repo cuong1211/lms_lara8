@@ -7,12 +7,13 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{url('admin/course').'/'.$course->id.('/createslide')}}" class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
+                                <a href="{{ url('/admin/course') . '/' . $course->id . '/createclass' }}" class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
                             </div>
                         </div>
                     </form>
                 </div>
-                <h4 class="page-title">SLIDE</h4>
+                <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
+                <h4 class="page-title">DANH SÁCH LỚP</h4>
             </div>
         </div>
     </div>
@@ -22,8 +23,10 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>SLIDE</th>
-                        <th>ĐƯỜNG DẪN</th>
+                        <th>LỚP</th>
+                        <th>GIẢNG VIÊN</th>
+                        <th>TRỢ GIẢNG</th>
+                        <th>HỌC SINH</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -32,13 +35,9 @@
                         $count = 1;
                         
                     @endphp
-                    @foreach ($slide as $item)
+                    @foreach ($classes as $item)
                         <tr>
-                            <td>{{ $count }}</td>
-                            <td>
-                                {{ $item->title }}
-                            </td>
-                            <td>{{ $item->link }}</td>
+                            <td></td>
                             <td class="table-action">
                                 <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
                                 <a href="" class="action-icon"> <i class="mdi mdi-delete"></i></a>

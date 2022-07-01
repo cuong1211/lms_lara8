@@ -40,7 +40,7 @@
                             <td>{{ $count }}</td>
                             <td>
                                 @if ($item->avatar == null)
-                                <span class="badge badge-success">Không có avatar</span>
+                                <span class="badge badge-danger">Không có avatar</span>
                                 @else
                                     <img src="uploads/teacher/{{$item->avatar}}" alt="avatar" class="rounded-circle avatar-table">   
                                 @endif
@@ -49,7 +49,7 @@
                             <td>{{$item->email}}</td>
                             <td>
                                 @if($item->zoom_id == Null)
-                                    <span class="badge badge-success">Không có Zoom</span>
+                                    <span class="badge badge-danger">Không có Zoom</span>
                                 @else
                                     {{$item->zoom->topic}}
                                 @endif

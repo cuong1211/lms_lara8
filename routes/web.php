@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\TeacherController;
 use App\Http\Controllers\backend\RoleController;
+use App\Http\Controllers\backend\SlideController;
+use App\Http\Controllers\backend\ClassController;
 use App\Http\Middleware\checkAdminLogin;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +61,14 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::post('/editcourse/{id}', [CourseController::class, 'editCourse']);
     route::get('/deletecourse/{id}', [CourseController::class, 'deleteCourse']);
 
-
+    //class
+    route::get('course/{id}/class', [ClassController::class, 'getClass']);
+    route::get('course/{course_id}/createclass', [ClassController::class, 'getcreateClass']);
+    route::post('course/{course_id}/createclass', [ClassController::class, 'createClass']);
+    route::get('course/{course_id}/editclass/{id}', [ClassController::class, 'getEditClass']);
+    route::post('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass']);
+    route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass']);
+    
     //unit
     route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);
     route::get('/course/{course_id}/createunit', [UnitController::class, 'getcreateUnit']);
@@ -69,12 +78,13 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('/course/{course_id}/unit/{id}/delete', [UnitController::class, 'deleteUnit']);
 
     //slide
-    route::get('course/{course_id}/unit/{id}/slide', [SlideController::class, 'getSlide']);
-    route::get('course/{course_id}/unit/{unit_id}/createslide', [SlideController::class, 'getcreateSlide']);
-    route::post('course/{course_id}/unit/{unit_id}/createslide', [SlideController::class, 'postcreateSlide']);
-    route::get('course/{course_id}/unit/{unit_id}/editslide/{id}', [SlideController::class, 'getEditSlide']);
-    route::post('course/{course_id}/unit/{unit_id}/editslide/{id}', [SlideController::class, 'editSlide']);
-    route::get('course/{course_id}/unit/{unit_id}/deleteslide/{id}', [SlideController::class, 'deleteSlide']);
+    route::get('course/{id}/slide', [SlideController::class, 'getSlide']);
+    route::get('course/{course_id}/createslide', [SlideController::class, 'getcreateSlide']);
+    route::post('course/{course_id}/createslide', [SlideController::class, 'postcreateSlide']);
+    route::get('course/{course_id}/editslide/{id}', [SlideController::class, 'getEditSlide']);
+    route::post('course/{course_id}/editslide/{id}', [SlideController::class, 'editSlide']);
+    route::get('course/{course_id}/deleteslide/{id}', [SlideController::class, 'deleteSlide']);
+    
 
     //test
     route::get('/test', [UserController::class, 'index']);

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class checkAdminLogin
+class CheckLogin
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class checkAdminLogin
     {
         if(Auth::check()){
             $user = Auth::user();
-            if($user->role_id == 1){
+            if($user->role_id == 1 || $user->role_id == 2 || $user->role_id == 3){
                 return $next($request);
             }else{
                 Auth::logout();

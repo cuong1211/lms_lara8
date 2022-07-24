@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <!-- project title-->
                     <h3 class="mt-0">
-                        {{$unit->title}}
+                        {{$unit->title}} : {{$unit->description}}
                     </h3>
 
                     <h5>Giới thiệu về bài học:</h5>
@@ -51,11 +51,57 @@
                         </a>
                     </div>
 
+                    <button type="button" class="btn btn-info">Vào lớp</button>
+
                 </div> <!-- end card-body-->
                 
             </div> <!-- end card-->
-
-            <div class="card">
+            <div class="accordion" id="accordionExample">
+                <div class="card mb-0">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="m-0">
+                            <a class="custom-accordion-title collapsed d-block pt-2 pb-2"
+                                data-toggle="collapse" href="#collapseTwo"
+                                aria-expanded="false" aria-controls="collapseTwo">
+                                LÝ THUYẾT
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse"
+                        aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="card-body">
+                                {!! $unit->content !!}
+                            </div>                
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-0">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="m-0">
+                            <a class="custom-accordion-title collapsed d-block pt-2 pb-2"
+                                data-toggle="collapse" href="#collapseThree"
+                                aria-expanded="false" aria-controls="collapseThree">
+                                BÀI TẬP VỀ NHÀ
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse"
+                        aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="card-body">
+                                Các em truy cập vào liên kết bên dưới để làm bài tập về nhà.
+                                <br>
+                                <a href="{{url('/course').'/'.$course->id.('/lesson').'/'.$unit->id.('/quiz').'/'.$unit->quizzes_id}}" class="btn btn-info">Bài tập trắc nghiệm</a>
+                                <a href="{{url('/course').'/'.$course->id.('/lesson').'/'.$unit->id.('/quiz').'/'.$unit->quizzes_id}}" class="btn btn-info">Bài tập lập trình</a>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card d-block">
                 <div class="card-body">
                     <h4 class="mt-0 mb-3">Câu hỏi về bài học</h4>
 

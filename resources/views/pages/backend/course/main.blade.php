@@ -26,7 +26,7 @@
                         <th>THỜI GIAN</th>
                         <th>TÀI NGUYÊN</th>
                         <th>LỚP</th>
-                        <th>Action</th>
+                        <th>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -9,7 +9,7 @@ class Quiz extends Model
 {
     use HasFactory;
     protected $fillable = ['quizzes'];
-    public function questions()
+    public function question()
     {
         return $this->hasMany(Question::class);
     }
@@ -21,4 +21,5 @@ class Quiz extends Model
     public function unit(){
         return $this->hasOne(Unit::class);
     }
+    
 }

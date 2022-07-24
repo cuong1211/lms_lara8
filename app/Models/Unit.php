@@ -13,12 +13,11 @@ class Unit extends Model
     protected $fillable = [
       'title',
       'description',
+      'content',
       'course_id',
-      'zoom_id',
       'slide_id',
       'homework_id',
       'quizzes_id',
-      'exam_id'
     ];
     public function course()
     {
@@ -37,6 +36,6 @@ class Unit extends Model
         return $this->HasMany('App\models\Exam','unit_id','exam_id');
     }
     public function quiz(){
-        return $this->hasOne(Quiz::class);
+        return $this->belongsTo('App\models\Quiz','quizzes_id');
     }
 }

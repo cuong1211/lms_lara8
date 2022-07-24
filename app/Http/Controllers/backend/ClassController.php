@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Imports\StudentsImport;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
 use App\Models\Classes;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClassController extends Controller
 {
@@ -31,6 +33,11 @@ class ClassController extends Controller
             'user_id' => $request->user_id,
         ]);
         return redirect(('/admin/course').'/'.$course_id.'/class');
+    }
+    public function Import(request $request)
+    {
+        Excel::import(new StudentsImport, $request->file);
+        return redirect()->back();
     }
 
 }

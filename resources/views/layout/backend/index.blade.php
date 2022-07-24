@@ -18,22 +18,7 @@
             @include('layout.backend.footer')
         </footer>
     </div>
-
-    <script src="assets/js/vendor.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
-
-    <!-- third party js -->
-    <script src="assets/js/vendor/apexcharts.min.js"></script>
-    <script src="assets/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="assets/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-    
-    <!-- third party js ends -->
-
-    <!-- demo app -->
-    <script src="assets/js/pages/demo.dashboard.js"></script>
-    <script src="assets/js/vendor/dropzone.min.js"></script>
-<!-- init js -->
-<script src="assets/js/ui/component.fileupload.js"></script>
+    @stack('js')
 </body>
 
 </html>

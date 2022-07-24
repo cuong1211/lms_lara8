@@ -181,8 +181,8 @@
                         <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
-                        <span class="account-user-name">Dominic Keller</span>
-                        <span class="account-position">Founder</span>
+                        <span class="account-user-name">{{ Auth::user()->name}}</span>
+                        <span class="account-position">{{App\Models\Role::find(Auth::user()->id)->name }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
@@ -216,7 +216,7 @@
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{url('/logout')}}" class="dropdown-item notify-item">
                         <i class="mdi mdi-logout mr-1"></i>
                         <span>Logout</span>
                     </a>
@@ -233,16 +233,6 @@
             </div>
         </a>
         <div class="app-search dropdown">
-            <form>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search..." id="top-search">
-                    <span class="mdi mdi-magnify search-icon"></span>
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </div>
-
-            </form>
 
             <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
                 <!-- item-->

@@ -15,31 +15,60 @@ class LoginController extends Controller
     public function getLogin()
     {
         if (Auth::check()) {
-            return redirect('/admin');
+            $user = Auth::user();
+            if($user->role_id == 1 ){
+                return redirect('/admin');
+            }elseif($user->role_id == 2 ){
+                return redirect('/admin');
+            }elseif($user->role_id == 3 ){
+                return redirect('/course');
+            }else{
+                Auth::logout();
+                return redirect('/login');
+            }
         } else {
             return view('pages.auth.login');
         }
     }
     public function postLogin(LoginRequest $request)
     {
-        $login = [
+        $admin = [
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => 1,
-            'status' => 0
+        ];
+        $teacher = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => 2,
+        ];
+
+        $student = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => 3,
         ];
         $value = Session::put('email', $request->email);
-        if (Auth::attempt($login)) {
+        if (Auth::attempt($admin)) {
             User::where('id', Auth::user()->id)->update(['status' => 1]);
             return redirect('/admin');
-        } else {
-            return redirect('/admin/login');
+        }
+        elseif (Auth::attempt($teacher)) {
+            User::where('id', Auth::user()->id)->update(['status' => 1]);
+            return redirect('/teacher');
+        }
+        elseif (Auth::attempt($student)) {
+            User::where('id', Auth::user()->id)->update(['status' => 1]);
+            return redirect('/course');
+        } 
+        else {
+            return redirect('/login');
         }
     }
     public function getLogout()
     {
         User::where('id', Auth::user()->id)->update(['status' => 0]);
         Auth::logout();
-        return redirect('/admin/login');
+        return redirect('/login');
     }
 }

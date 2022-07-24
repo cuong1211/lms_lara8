@@ -20,7 +20,7 @@
                                 <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>
                             </div>
 
-                            <form action="{{ url('admin/login') }}" method="POST">
+                            <form action="{{ url('/login') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="emailaddress">Email address</label>

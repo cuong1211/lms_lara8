@@ -23,6 +23,12 @@
                                     class="btn btn-dark">SLIDE</a>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <a href="{{ url('/admin/course') . '/' . $course->id . '/quiz' }}"
+                                    class="btn btn-dark">CÂU HỎI</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -35,9 +41,10 @@
                     <tr>
                         <th>STT</th>
                         <th>BÀI HỌC</th>
+                        <th>NỘI DUNG</th>
                         <th>SLIDE</th>
-                        <th>HOMEWORK</th>
                         <th>QUIZ</th>
+                        <th>HOMEWORK</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -50,13 +57,32 @@
                         <tr>
                             <td>{{ $count }}</td>
 
-                            <td>{{ $item->title }}</td>
+                            <td>{{ $item->title }}:{{ $item->description }}</td>
+                            <td>
+                                @if (isset($item->content))
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModalLong{{$item->id}}">
+                                        Xem
+                                    </button>
+                                @endif
+                                
+                            </td>
                             <td>
                                 @if ($item->slide_id == null)
                                     Không có
                                 @else
-                                    <a href="{{ $item->slide->link }}"><button type="button" class="btn btn-info">Truy
-                                            cập</button></a>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#exampleModalCenter{{$item->id}}">
+                                        Truy cập
+                                    </button>
+                                @endif
+                                {{-- <a href="{{ $item->slide->link }}"> --}}
+                            </td>
+                            <td>
+                                @if ($item->quizzes_id == null)
+                                    Không có
+                                @else
+                                    {{ $item->quiz->quiz }}
                                 @endif
                             </td>
                             <td>
@@ -65,13 +91,6 @@
                                 @else
                                     {{ $item->homework }}
                                 @endif
-                            <td>
-                                @if ($item->quiz == null)
-                                    Không có
-                                @else
-                                    {{ $item->quiz }}
-                                @endif
-                            </td>
                             <td class="table-action">
                                 <a href="{{ url('/admin/course') . '/' . $course->id . '/unit' . '/' . $item->id . '/edit' }}"
                                     class="action-icon"> <i class="mdi mdi-pencil"></i></a>
@@ -82,6 +101,49 @@
                         @php
                             $count++;
                         @endphp
+                        {{-- modal slide --}}
+                        <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">SLIDE</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <iframe src="{{ $item->slide->link }}" frameborder="0" width="100%"
+                                            height="500"></iframe>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- modal content --}}
+                        <div class="modal fade bd-example-modal-lg" id="exampleModalLong{{$item->id}}" tabindex="-1" role="dialog" 
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Nội dung</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {!! $item->content !!}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>

@@ -42,7 +42,7 @@
                                 @if ($item->avatar == null)
                                 <span class="badge badge-danger">Không có avatar</span>
                                 @else
-                                    <img src="uploads/teacher/{{$item->avatar}}" alt="avatar" class="rounded-circle avatar-table">   
+                                    <img src="uploads/teacher/{{$item->avatar}}" alt="avatar" class="img-fluid img-thumbnail rounded-circle" width="60"/>   
                                 @endif
                             </td>
                             <td>{{$item->name}}</td>

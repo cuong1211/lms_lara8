@@ -13,10 +13,12 @@ use App\Http\Controllers\backend\TeacherController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SlideController;
 use App\Http\Controllers\backend\ClassController;
+use App\Http\Controllers\backend\QuizController;
 use App\Http\Middleware\checkAdminLogin;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\backend\ZoomController;
+use App\Http\Middleware\CheckLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,16 +34,17 @@ use App\Http\Controllers\backend\ZoomController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['namespace' => 'frontend'], function () {
-    route::get('/course', [FrontendController::class, 'index']);
+Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], function () {
+    route::get('/course', [FrontendController::class, 'getCourse']);
     route::get('/course/{id}/lesson', [FrontendController::class, 'getLesson']);
     route::get('/course/{course_id}/lesson/{id}', [FrontendController::class, 'getUnit']);
-    route::get('/course/{course_id}/lesson/{id}/quiz/{quiz}', [FrontendController::class, 'getQuizz']);
+    Route::get('course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showQuiz']);
+    Route::post('course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showResult']);
 });
 route::group(['Middleware'=>['web'],['api']], function () {
-    route::get('admin/login', [LoginController::class, 'getLogin']);
-    route::post('admin/login', [LoginController::class, 'postLogin']);
-    route::get('admin/logout', [LoginController::class, 'getLogout']);
+    route::get('/login', [LoginController::class, 'getLogin']);
+    route::post('/login', [LoginController::class, 'postLogin']);
+    route::get('/logout', [LoginController::class, 'getLogout']);
     
     //register
     route::get('admin/register', [RegisterController::class, 'getRegister']);
@@ -68,6 +71,7 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/editclass/{id}', [ClassController::class, 'getEditClass']);
     route::post('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass']);
     route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass']);
+    route::post('course/{course_id}/class/import', [ClassController::class, 'Import']);
     
     //unit
     route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);
@@ -140,7 +144,13 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::post('/edithomework/{id}', [HomeworkController::class, 'editHomework']);
     route::get('/deletehomework/{id}', [HomeworkController::class, 'deleteHomework']);
     
-
+    //quiz
+    Route::get('course/{id}/quiz', [QuizController::class,'index']);
+    Route::get('course/{course_id}/quiz/{id}/show', [QuizController::class,'show']);
+    Route::get('course/{course_id}/createquiz', [QuizController::class,'create']);
+    Route::post('course/{course_id}/createquiz', [QuizController::class,'store']);
+    
+    Route::delete('course/{course_id}/{quiz}', [QuizController::class,'destroy']);
     // //quiz
     // route::get('/quiz', [TestController::class, 'getTest']);
     // route::get('/createquiz', [TestController::class, 'getcreateTest']);

@@ -38,7 +38,10 @@
                         @endforeach
                     </select>
                 </div>
-
+                <div class="form-group col-sm-6">
+                    <label for="uname">Nội dung:</label>
+                    <textarea name="content" id="text-content">{{$unit->content}}</textarea>
+                </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="submit" class="btn iq-bg-danger">Cancel</button>
@@ -47,3 +50,13 @@
         </div>
     </div>
 @endsection
+@push('js')
+
+    <script>
+        $(document).ready(function() {
+            $('#text-content').summernote({
+                height: 300,
+            });
+        });
+    </script>
+@endpush

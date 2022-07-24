@@ -236,7 +236,7 @@
                     </span>
                     <span>
                         <span class="account-user-name">{{ Auth::user()->name}}</span>
-                        <span class="account-position">Founder</span>
+                        <span class="account-position">{{App\Models\Role::find(Auth::user()->id)->name }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
@@ -270,7 +270,7 @@
                     </a>
 
                     <!-- item-->
-                    <a href="{{url('admin/logout')}}" class="dropdown-item notify-item">
+                    <a href="{{url('/logout')}}" class="dropdown-item notify-item">
                         <i class="mdi mdi-logout mr-1"></i>
                         <span>Logout</span>
                     </a>

@@ -11,7 +11,7 @@ use App\models\Quiz;
 class UnitController extends Controller
 {
     public function getUnit($id){
-        $unit = Unit::query()->where('course_id',$id)->get();
+        $unit = Unit::query()->where('course_id',$id)->with('slide','quiz')->get();
         // $unit = Unit::query()->with('course','zoom','slide','quiz')->get();
         $course= Course::find($id);
         $slide = Slide::query()->get();
@@ -28,6 +28,7 @@ class UnitController extends Controller
         $unit = Unit::create([
             'title'=>$request->title,
             'description'=>$request->description,
+            'content'=>$request->content,
             'course_id'=>$request->course_id,
             'slide_id'=>$request->slide_id,
             'quizzes_id'=>$request->quizzes_id,
@@ -45,6 +46,8 @@ class UnitController extends Controller
         $unit = Unit::query()->find($id);
         $unit->update([
             'title'=>$request->title,
+            'description'=>$request->description,
+            'content'=>$request->content,
             'course_id'=>$request->course_id,
             'slide_id'=>$request->slide_id,
             'quizzes_id'=>$request->quizzes_id,

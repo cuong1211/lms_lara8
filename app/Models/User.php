@@ -45,7 +45,7 @@ class User extends Authenticatable
         return $this->belongsTo(Zoom::class);
     }
     public function classes(){
-        return $this->hasMany(Classes::class);
+        return $this->hasMany(Classes::class,'user_id');
     }
     public function quizzes()
     {

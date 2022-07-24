@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Role;
+use App\Imports\StudentsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -52,5 +54,16 @@ class UserController extends Controller
         $user->delete();
         Session::flash('success','User deleted successfully');
         return redirect()->route('user.main');
+    }
+    public function Import(request $request)
+    {   
+        // $course = Course::find($course_id);
+        Excel::import(new StudentsImport, $request->file);
+        // $class = Classes::query()->get();
+        // foreach($class as $c)
+        // {
+        //      DB::table('class')->update(['course_id' => $course_id]);
+        // }
+        return redirect()->back();
     }
 }

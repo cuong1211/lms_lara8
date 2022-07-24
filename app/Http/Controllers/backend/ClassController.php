@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use App\Imports\StudentsImport;
+
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
 use App\Models\Classes;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+
 
 class ClassController extends Controller
 {
     public function getClass($id)
     {
-        $classes = Classes::all();
+        $classes = Classes::query()->where('course_id', $id)->with('user')->get();
         $course= Course::find($id);
         return view('pages.backend.class.main', compact('classes','course'));
     }
@@ -34,10 +35,6 @@ class ClassController extends Controller
         ]);
         return redirect(('/admin/course').'/'.$course_id.'/class');
     }
-    public function Import(request $request)
-    {
-        Excel::import(new StudentsImport, $request->file);
-        return redirect()->back();
-    }
+    
 
 }

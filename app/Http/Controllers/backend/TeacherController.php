@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Zoom;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
+use App\Imports\TeachersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends Controller
 {
@@ -59,6 +61,17 @@ class TeacherController extends Controller
         $teacher->delete();
         Session::flash('success','Teacher deleted successfully');
         return redirect()->route('teacher.main');
+    }
+    public function Import(request $request)
+    {   
+        // $course = Course::find($course_id);
+        Excel::import(new TeachersImport, $request->file);
+        // $class = Classes::query()->get();
+        // foreach($class as $c)
+        // {
+        //      DB::table('class')->update(['course_id' => $course_id]);
+        // }
+        return redirect()->back();
     }
 
 }

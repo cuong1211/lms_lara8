@@ -27,16 +27,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-sm-6">
-                    <label for="uname">HỌC SINH:</label>
-                    <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." name='user_id'>
-                        @foreach ($student as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="submit" class="btn iq-bg-danger">Cancel</button>

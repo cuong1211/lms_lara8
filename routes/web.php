@@ -71,7 +71,7 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/editclass/{id}', [ClassController::class, 'getEditClass']);
     route::post('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass']);
     route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass']);
-    route::post('course/{course_id}/class/import', [ClassController::class, 'Import']);
+    
     
     //unit
     route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);
@@ -100,6 +100,7 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     route::post('/user/{id}/edit', [UserController::class, 'update'])->name('user.update');
     route::get('/user/{id}/delete', [UserController::class, 'delete'])->name('user.delete');
+    route::post('user/import', [UserController::class, 'Import']);
 
     //teacher
     route::get('/teacher', [TeacherController::class, 'getTeacher'])->name('teacher.main');
@@ -108,6 +109,7 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('/teacher/{id}/edit', [TeacherController::class, 'edit']);
     route::post('/teacher/{id}/edit', [TeacherController::class, 'update']);
     route::get('/teacher/{id}/delete', [TeacherController::class, 'destroy']);
+    route::post('/teacher/import', [TeacherController::class, 'Import']);
 
     //role
     route::get('/role', [RoleController::class, 'getRole'])->name('role.main');

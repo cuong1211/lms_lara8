@@ -36,13 +36,13 @@
             <!-- end row-->
 
             <div class="row">
-                @foreach ($course as $item)
+                @foreach ($class_course as $item)
                     <div class="col-md-6 col-xl-3">
                         <!-- project card -->
-                        <a href="{{ url('/course') . '/' . $item->id . '/lesson' }}" class="text-title">
+                        <a href="{{ route('frontend.lesson',['user_id'=>$user_id,'class_id'=>$item['id'],'id'=>$item['course']['id']]) }}" class="text-title">
                             <div class="card d-block">
                                 <!-- project-thumbnail -->
-                                <img class="card-img-top" src="uploads/courses/{{ $item->img }}" alt="project image cap">
+                                <img class="card-img-top" src="uploads/courses/{{ $item['course']['img'] }}" alt="project image cap">
                                 <div class="card-img-overlay">
                                     <div class="badge badge-secondary p-1">Đang học</div>
                                 </div>
@@ -50,8 +50,9 @@
                                 <div class="card-body position-relative">
                                     <!-- project title-->
                                     <h4 class="mt-0">
-                                        {{ $item->name }}
+                                        {{ $item['course']['name'] }}
                                     </h4>
+                                    <p>Lớp: {{ $item['name']}}</p>
 
                                     <!-- project detail-->
 
@@ -65,7 +66,7 @@
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </a>
-                    </div> <!-- end col -->
+                    </div>
                 @endforeach
             </div>
             <!-- end row-->

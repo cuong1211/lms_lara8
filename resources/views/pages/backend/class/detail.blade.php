@@ -7,16 +7,18 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . '/createclass' }}"
-                                    class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
+                                <a href="{{ url('/admin/course') . '/' . $course->id . ('/class').'/'.$class->id.'/addstudent'}}"
+                                    class="btn btn-dark">
+                                    <i class="mdi mdi-pencil-plus-outline">THÊM HỌC SINH</i></a>
                             </div>
                         </div>
                     </form>
-
+                    <button type="button" class="btn btn-primary">BẢNG ĐIỂM</button>
+                    <button type="button" class="btn btn-primary">THỐNG KÊ</button>
                 </div>
 
                 <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
-                <h4 class="page-title">DANH SÁCH LỚP</h4>
+                <h4 class="page-title">DANH SÁCH LỚP:{{$class->name}}</h4>
             </div>
         </div>
     </div>
@@ -26,8 +28,7 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>LỚP</th>
-                        <th>Giáo viên</th>
+                        <th>Họ Tên</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -36,14 +37,11 @@
                         $count = 1;
                         
                     @endphp
-                    @foreach ($classes as $item)
+                    @foreach ($classdetail as $item)
                         <tr>
                             <td>{{ $count }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->user->name }}</td>
+                            <td>{{ $item->user_name }}</td>
                             <td class="table-action">
-                                <a href="{{ route('class.detail',['course_id'=>$course->id,'id'=>$item->id]) }}"><button type="button" class="btn btn-primary">Chi tiết</button></a>
-                                
                                 <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
                                 <a href="" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                             </td>

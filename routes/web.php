@@ -35,11 +35,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], function () {
-    route::get('/course', [FrontendController::class, 'getCourse']);
-    route::get('/course/{id}/lesson', [FrontendController::class, 'getLesson']);
-    route::get('/course/{course_id}/lesson/{id}', [FrontendController::class, 'getUnit']);
-    Route::get('course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showQuiz']);
-    Route::post('course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showResult']);
+    route::get('user/{user_id}/course', [FrontendController::class, 'getCourse'])->name('frontend.course');
+    route::get('user/{user_id}/class/{class_id}/course/{id}/lesson', [FrontendController::class, 'getLesson'])->name('frontend.lesson');
+    route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{id}', [FrontendController::class, 'getUnit'])->name('frontend.unit');
+    Route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showQuiz'])->name('frontend.quiz');
+    Route::post('user/{user_id}/class/{class_id}course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showResult'])->name('frontend.result');
+    Route::any('/createmeetingsupport',[ZoomController::class,'postCreateSupport'])->name('zoom.support');
 });
 route::group(['Middleware'=>['web'],['api']], function () {
     route::get('/login', [LoginController::class, 'getLogin']);
@@ -71,6 +72,9 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/editclass/{id}', [ClassController::class, 'getEditClass']);
     route::post('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass']);
     route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass']);
+    route::get('course/{course_id}/class/{id}', [ClassController::class, 'getDetailClass'])->name('class.detail');
+    route::get('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'getAddStudent']);
+    route::post('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
     
     
     //unit
@@ -124,16 +128,14 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     Route::get('/zoom',[ZoomController::class,'getZoom'])->name('zoom.main');
     Route::get('/creatmeetings',[ZoomController::class,'getCreate']);
     Route::post('/creatmeetings',[ZoomController::class,'postCreate']);
-    Route::get('/createmeetingsupport',[ZoomController::class,'getCreateSupport']);
-    Route::post('/createmeetingsupport',[ZoomController::class,'postCreateSupport']);
     Route::get('/meeting/{id}',[ZoomController::class,'get'])->where('id', '[0-9]+');
     Route::patch('/meeting/{id}',[ZoomController::class,'update'])->where('id', '[0-9]+');
     Route::delete('/meeting/{id}',[ZoomController::class,'delete'])->where('id', '[0-9]+');
 
     //zoom support
     Route::get('/zoomsupport',[ZoomController::class,'getZoomSupport']);
-    Route::get('/meetingsupport/{id}',[ZoomController::class,'getsupport'])->where('id', '[0-9]+');
-    Route::patch('/meetingsupport/{id}',[ZoomController::class,'updatesupport'])->where('id', '[0-9]+');
+    Route::get('/createmeetingsupport',[ZoomController::class,'getCreateSupport']);;
+    
     Route::delete('/meetingsupport/{id}',[ZoomController::class,'deletesupport'])->where('id', '[0-9]+');
     
 

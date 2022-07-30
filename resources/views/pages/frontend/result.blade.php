@@ -33,7 +33,7 @@
             {{-- @foreach ($data as $key => $datum)
                 @if ($key != '_token' && $key != 'invisible')
                     <p>Your guess for question {{ $i }} was {{ App\models\Answer::find($datum)->answer }}</p>
-                    <?php $i++; ?>
+                    <?php $i++ ?>
                 @endif
             @endforeach --}}
             <div class="row">

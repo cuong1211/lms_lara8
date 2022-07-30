@@ -11,7 +11,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{url('/course')}}">Khoá học</a></li>
-                        <li class="breadcrumb-item"><a href="{{url('/course').'/'.$course->id.('/lesson')}}">{{$course->name}}</a></li>
+                        <li class="breadcrumb-item"><a href=""></a></li>
                         <li class="breadcrumb-item active">{{$unit->title}}</li>
                     </ol>
                 </div>
@@ -46,12 +46,15 @@
 
                     <div>
                         <h5>GIÁO VIÊN:</h5>
-                        <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mat Helme" class="d-inline-block">
-                            <img src="assets/images/users/avatar-6.jpg" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
+                        <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ $teacher->user->name }}" class="d-inline-block">
+                            <img src="{{ $teacher->user->avatar}}" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
                         </a>
                     </div>
 
-                    <button type="button" class="btn btn-info">Vào lớp</button>
+                    
+                    <a href="{{$zoom->join_url}}" target="_blank">
+                        <button type="button" class="btn btn-info">Vào lớp</button>
+                    </a>
 
                 </div> <!-- end card-body-->
                 
@@ -92,8 +95,8 @@
                             <div class="card-body">
                                 Các em truy cập vào liên kết bên dưới để làm bài tập về nhà.
                                 <br>
-                                <a href="{{url('/course').'/'.$course->id.('/lesson').'/'.$unit->id.('/quiz').'/'.$unit->quizzes_id}}" class="btn btn-info">Bài tập trắc nghiệm</a>
-                                <a href="{{url('/course').'/'.$course->id.('/lesson').'/'.$unit->id.('/quiz').'/'.$unit->quizzes_id}}" class="btn btn-info">Bài tập lập trình</a>
+                                <a href="{{route('frontend.quiz',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit->id,'id'=>$unit->quiz->id])}}" class="btn btn-info">Bài tập trắc nghiệm</a>
+                                <a href="" class="btn btn-info">Bài tập lập trình</a>
                             </div>
                             
                             

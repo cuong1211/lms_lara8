@@ -44,12 +44,14 @@ class User extends Authenticatable
     public function zoom(){
         return $this->belongsTo(Zoom::class);
     }
-    public function classes(){
-        return $this->hasMany(Classes::class,'user_id');
-    }
     public function quizzes()
     {
         return $this->hasOne(Quiz::class);
     }
+    public function class_user()
+    {
+        return $this->hasMany(class_user::class);
+    }
+
     
 }

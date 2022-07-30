@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-3">
                 <h2>{{ $quiz->quiz }}</h2>
-                <form method="post" action="{{url('/course').'/'.$quiz->course_id.('/lesson').'/'.$unit->id.('/quiz').'/'.$unit->quizzes_id}}">
+                <form method="post" action="{{route('frontend.result',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit_id,'id'=>$quiz->id])}}">
                     {{-- <input name="invisible" type="hidden" value="{{ $quiz->id }}"> --}}
                     @csrf
                     <?php $i = 1; ?>

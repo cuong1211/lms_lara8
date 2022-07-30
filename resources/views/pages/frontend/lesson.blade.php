@@ -12,7 +12,8 @@
                             <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $course->name }}</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">KHOÁ HỌC</h4>
+                    <h4 class="page-title">KHOÁ HỌC: {{ $course->name}}</h4>
+                    <h4 >LỚP: {{ $class_user[0]['classes']['name']}}</h4>
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@
             @foreach ($unit as $item)
                 <div class="col-md-6 col-xl-3">
                     <!-- project card -->
-                    <a href="{{ url('/course') . '/' . $item->course->id . '/lesson' . '/' . $item->id }}" class="text-title">
+                    <a href="{{ route('frontend.unit',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course->id,'id'=>$item->id])}}" class="text-title">
                         <div class="card d-block">
                             <!-- project-thumbnail -->
                             <img class="card-img-top" src="uploads/courses/{{ $item->course->img }}"

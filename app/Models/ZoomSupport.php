@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ZoomSupport extends Model
 {
     use HasFactory;
+    protected $fillable = ['title'];
 }

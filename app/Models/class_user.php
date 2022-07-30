@@ -18,5 +18,14 @@ class class_user extends Model
       {
         return $this->hasMany('App\Models\point','student_id','id');
       }
+      public function classes()
+      {
+        return $this->belongsTo(Classes::class,'class_id','id');
+      }
+      public function user()
+      {
+        return $this->belongsTo('App\Models\user','user_id','id');
+      }
+      
       
 }

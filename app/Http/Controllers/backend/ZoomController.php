@@ -118,11 +118,6 @@ class ZoomController extends Controller
         // ]);
         return redirect()->route('zoom.main');
     }
-    public function getCreatesupport()
-    {
-        return view('pages.backend.zoom.createsupport');
-    }
-
     public function postCreatesupport(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -149,15 +144,15 @@ class ZoomController extends Controller
             'settings' => [
                 'host_video' => false,
                 'participant_video' => false,
-                'waiting_room' => true,
+                'waiting_room' => false,
             ]
         ])->body(),true);
 
-            $zoomsupport = ZoomSupport::create([
+            $zoomsupport = Zoom::create([
 
                 'id' => $response['id'],
                 'topic' => $response['topic'],
-                'class' => $request->class,
+                // 'class' => $request->class,
                 'type' => $response['type'],
                 'join_url' => $response['join_url'],
                 'start_time' => $response['start_time'],
@@ -174,24 +169,21 @@ class ZoomController extends Controller
 
 
          Http::post('https://discord.com/api/webhooks/867285596090007554/HSyaCb-3GZxjjqZ7ox3wNwcfFBlJ2v9i_BBVriSvMsoXOy9WRLLMNWq172YzVgFoTHJl', [
-            'content' => "Đồng chí {$request->topic} cần hỗ trợ các đồng chí",
+            'content' => "Học sinh {$request->topic} có yêu cầu hỗ trợ",
             'embeds' => [
                 [
                     'title' => "Vào trợ giúp ngay nào",
                     'url' => $response['join_url'],
-                    'description' => "Đơn vị {$request->class}",
+                    'description' => "Lớp: {$request->class}",
                     'color' => '7506394',
-                    'author' => [
-                        'name'=> "There is no shortcut to become Hokage!",
-                    ],
                     'footer' => [
-                        'text'=>'dc gui tu he thong',
+                        'text'=>'Được gửi từ hệ thống',
                     ],
                     "timestamp" => $response['start_time'],
                 ]
             ],
         ]);
-        return redirect('api/zoomsupport');
+        return redirect($response['join_url']);
     }
     public function get(Request $request, string $id)
     {

@@ -29,7 +29,6 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>AVATAR</th>
                         <th>TÊN</th>
                         <th>EMAIL</th>
                         <th>TRẠNG THÁI</th>
@@ -44,7 +43,6 @@
                     @foreach ($user as $item)
                         <tr>
                             <td>{{ $count }}</td>
-                            <td></td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>

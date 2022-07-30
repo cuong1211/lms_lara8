@@ -114,6 +114,9 @@
                                 <td>
                                     <div id="add_question" class="btn btn-info">Add Question</div>
                                 </td>
+                                <td>
+                                    <div id="add_answer" class="btn btn-info">Add Question Answer</div>
+                                </td>
                             </tr>
                             <tr id='index2'></tr>
                         </tbody>

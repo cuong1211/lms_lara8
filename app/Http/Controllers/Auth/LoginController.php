@@ -21,7 +21,7 @@ class LoginController extends Controller
             }elseif($user->role_id == 2 ){
                 return redirect('/admin');
             }elseif($user->role_id == 3 ){
-                return redirect('/course');
+                return redirect()->route('frontend.course',['user_id'=>$user->id]);
             }else{
                 Auth::logout();
                 return redirect('/login');
@@ -59,7 +59,7 @@ class LoginController extends Controller
         }
         elseif (Auth::attempt($student)) {
             User::where('id', Auth::user()->id)->update(['status' => 1]);
-            return redirect('/course');
+            return redirect()->route('frontend.course',['user_id'=>Auth::user()->id]);
         } 
         else {
             return redirect('/login');

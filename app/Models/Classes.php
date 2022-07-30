@@ -22,4 +22,8 @@ class Classes extends Model
     {
         return $this->belongsTo('App\models\User');
     }
+    public function class_user()
+    {
+        return $this->hasMany(class_user::class,'class_id');
+    }
 }

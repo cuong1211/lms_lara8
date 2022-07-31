@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
 use App\Models\Classes;
+use App\Models\point;
 use Illuminate\Support\Facades\DB;
 
 
@@ -66,6 +67,10 @@ class ClassController extends Controller
                 'class_id' => $class_id,
                 'user_id' => $value->id,
             ]);
+            $point = new Point;
+            $point->user_id = $value->id;
+            $point->class_id = $class_id;
+            $point ->save();
         }
         return redirect(route('class.detail',['course_id'=>$course_id,'id'=>$class_id]));
     }

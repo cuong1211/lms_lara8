@@ -41,14 +41,14 @@ class FrontendController extends Controller
         return view('pages.frontend.lesson',compact('unit','course','class_user','user_id','class_id'));
     }
     public function getUnit($user_id,$class_id,$course_id,$id){
-        $unit = Unit::find($id);
+        $unit = Unit::find($id)->with('quiz')->first();
         $teacher = Classes::query()->where('id',$class_id)->with('user')->first();
         $zoom_id  = $teacher->user->zoom_id;
         $zoom = Zoom::query()->where('id',$zoom_id)->first();
         return view('pages.frontend.unit',compact('unit','teacher','user_id','class_id','course_id','zoom'));
 
     }
-    public function showQuiz($user_id,$class_id,$course_id,$unit_id,$id) {
+    public function showQuiz($user_id,$class_id,$course_id,$unit_id,$id){
         $quiz = Quiz::find($id);
         $questions = Question::query()->where('quiz_id',$id)->with('answers')->get();
         return view('pages.frontend.quiz',compact('quiz','questions','unit_id','course_id','class_id','user_id'));

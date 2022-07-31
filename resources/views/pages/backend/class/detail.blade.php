@@ -13,7 +13,10 @@
                             </div>
                         </div>
                     </form>
-                    <button type="button" class="btn btn-primary">BẢNG ĐIỂM</button>
+                    
+                    <a href="{{route('point.main',['course_id'=>$course->id,'class_id'=>$class->id])}}">
+                        <button type="button" class="btn btn-primary">BẢNG ĐIỂM</button>
+                    </a>
                     <button type="button" class="btn btn-primary">THỐNG KÊ</button>
                 </div>
 

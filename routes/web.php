@@ -13,6 +13,7 @@ use App\Http\Controllers\backend\TeacherController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SlideController;
 use App\Http\Controllers\backend\ClassController;
+use App\Http\Controllers\backend\PointController;
 use App\Http\Controllers\backend\QuizController;
 use App\Http\Middleware\checkAdminLogin;
 use GuzzleHttp\Middleware;
@@ -76,7 +77,15 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'getAddStudent']);
     route::post('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
     
-    
+    //point
+    route::get('course/{course_id}/class/{class_id}/point', [PointController::class, 'getPoint'])->name('point.main');
+    route::get('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'editPoint'])->name('point.edit');
+    route::post('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'postEditPoint'])->name('point.postedit');
+
+    //Statistic
+    route::get('course/{course_id}/class/{class_id}/static', [PointController::class, 'getStatic'])->name('static.main');
+
+
     //unit
     route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);
     route::get('/course/{course_id}/createunit', [UnitController::class, 'getcreateUnit']);

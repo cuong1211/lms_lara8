@@ -57,6 +57,7 @@ route::group(['Middleware'=>['web'],['api']], function () {
 Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'namespace' => 'backend'], function () {
     //backend
     route::get('/', [BackendController::class, 'index']);
+    route::get('/pre_course', [BackendController::class, 'getCourse']);
 
     //course    
     route::get('/course', [CourseController::class, 'getCourse']);

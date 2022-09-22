@@ -42,9 +42,10 @@
 
         <div class="row">
             @foreach ($unit as $item)
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-6 col-xl-3" >
                     <!-- project card -->
-                    <a href="{{ route('frontend.unit',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course->id,'id'=>$item->id])}}" class="text-title">
+                    {{-- style="pointer-events: none;opacity: 0.4;" --}}
+                    <a href="{{ route('frontend.unit',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course->id,'id'=>$item->id])}}" class="text-title" disabled>
                         <div class="card d-block">
                             <!-- project-thumbnail -->
                             <img class="card-img-top" src="uploads/courses/{{ $item->course->img }}"

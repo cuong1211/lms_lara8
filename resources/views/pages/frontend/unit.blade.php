@@ -95,8 +95,12 @@
                             <div class="card-body">
                                 Các em truy cập vào liên kết bên dưới để làm bài tập về nhà.
                                 <br>
-                                <a href="{{route('frontend.quiz',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit->id,'id'=>$unit->quiz->id])}}" class="btn btn-info">Bài tập trắc nghiệm</a>
-                                <a href="" class="btn btn-info">Bài tập lập trình</a>
+                                @if (isset($unit->quizzes_id))
+                                    <a href="{{route('frontend.quiz',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit->id,'id'=>$unit->quizzes_id])}}" class="btn btn-info">Bài tập trắc nghiệm</a>
+                                @else
+                                    
+                                @endif
+                                <a href="{{route('frontend.homework',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit->id])}}" class="btn btn-info">Bài tập về nhà</a>
                             </div>
                             
                             

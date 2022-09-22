@@ -15,6 +15,7 @@ use App\Models\CorrectAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Classes;
+use App\Models\Homework;
 use App\Models\Zoom;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\ToArray;
@@ -41,7 +42,8 @@ class FrontendController extends Controller
         return view('pages.frontend.lesson',compact('unit','course','class_user','user_id','class_id'));
     }
     public function getUnit($user_id,$class_id,$course_id,$id){
-        $unit = Unit::find($id)->with('quiz')->first();
+        $unit = Unit::query()->where('id',$id)->first();
+        // dd($unit);
         $teacher = Classes::query()->where('id',$class_id)->with('user')->first();
         $zoom_id  = $teacher->user->zoom_id;
         $zoom = Zoom::query()->where('id',$zoom_id)->first();
@@ -75,5 +77,7 @@ class FrontendController extends Controller
         return view('pages.frontend.result', compact('data','correct_answers_array_filtered', 'answers_array', 'correct_answers_count', 'question_count', 'point'));
 
     }
-
+    public function showHW(){
+        return view('pages.frontend.Homework');
+    }
 }

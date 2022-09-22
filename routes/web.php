@@ -33,7 +33,7 @@ use App\Http\Middleware\CheckLogin;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.auth.login');
 });
 Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], function () {
     route::get('user/{user_id}/course', [FrontendController::class, 'getCourse'])->name('frontend.course');

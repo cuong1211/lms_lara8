@@ -57,6 +57,10 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        {{ $classdetail->links() }}
+
+    </div>
 
     
 @endsection

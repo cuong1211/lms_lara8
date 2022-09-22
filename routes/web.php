@@ -41,6 +41,8 @@ Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], funct
     route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{id}', [FrontendController::class, 'getUnit'])->name('frontend.unit');
     Route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showQuiz'])->name('frontend.quiz');
     Route::post('user/{user_id}/class/{class_id}course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showResult'])->name('frontend.result');
+    route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/homework',[FrontendController::class,'showHW'])->name('frontend.homework');
+    route::post('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/homework',[FrontendController::class,'postHW'])->name('frontend.posthomework');
     Route::any('/createmeetingsupport',[ZoomController::class,'postCreateSupport'])->name('zoom.support');
 });
 route::group(['Middleware'=>['web'],['api']], function () {

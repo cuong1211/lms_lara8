@@ -15,6 +15,7 @@ use App\Models\CorrectAnswer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Classes;
+use App\Models\Homework;
 use App\Models\Zoom;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\ToArray;
@@ -75,5 +76,8 @@ class FrontendController extends Controller
         $point = round(($point_per_question * $correct_answers_count),1);
         return view('pages.frontend.result', compact('data','correct_answers_array_filtered', 'answers_array', 'correct_answers_count', 'question_count', 'point'));
 
+    }
+    public function showHW(){
+        return view('pages.frontend.Homework');
     }
 }

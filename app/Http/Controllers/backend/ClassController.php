@@ -45,7 +45,7 @@ class ClassController extends Controller
             ->join('class', 'class_users.class_id', '=', 'class.id')
             // ->join('users', 'class_users.user_id', '=', 'users.id')
             ->where('class_id', '=', $id)
-            ->get(); 
+            ->simplePaginate(15); 
         $class = Classes::find($id);
         $course = Course::find($course_id);
         return view('pages.backend.class.detail', compact('classdetail', 'course','class'));

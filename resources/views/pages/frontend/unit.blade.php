@@ -98,9 +98,9 @@
                                 @if (isset($unit->quizzes_id))
                                     <a href="{{route('frontend.quiz',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit->id,'id'=>$unit->quizzes_id])}}" class="btn btn-info">Bài tập trắc nghiệm</a>
                                 @else
-                                    asdsdasd
+                                    
                                 @endif
-                                {{-- <a href="" class="btn btn-info">Bài tập lập trình</a> --}}
+                                <a href="{{route('frontend.homework',['user_id'=>$user_id,'class_id'=>$class_id,'course_id'=>$course_id,'unit_id'=>$unit->id])}}" class="btn btn-info">Bài tập về nhà</a>
                             </div>
                             
                             

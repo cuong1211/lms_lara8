@@ -22,6 +22,10 @@ class TeacherController extends Controller
         return view('pages.backend.teacher.create',compact('zoom'));
     }
     public function store(Request $request){
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+        ]);
         $teacher=new User();
         $teacher->name=$request->name;
         $teacher->email=$request->email;

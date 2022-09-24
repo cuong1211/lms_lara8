@@ -58,15 +58,18 @@ class ClassController extends Controller
 
     }
     public function postAddStudent(request $request, $course_id, $class_id){
-       // dd($request->ids);
-        $ids = $request->ids; 
+       //dd($request->ids);
+        $ids = $request->ids;
+        
 
         $student = User::whereIn('id',$ids)->get();
         foreach ($student as $key => $value) {
+            
             $class_user = class_user::create([
                 'class_id' => $class_id,
                 'user_id' => $value->id,
             ]);
+
             $point = new Point;
             $point->user_id = $value->id;
             $point->class_id = $class_id;

@@ -86,8 +86,12 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::post('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'postEditPoint'])->name('point.postedit');
 
     //Statistic
-    route::get('course/{course_id}/class/{class_id}/static', [PointController::class, 'getStatic'])->name('static.main');
-
+    route::get('static', [PointController::class, 'StaticIndex'])->name('static.index');
+    route::get('static/{id_class}', [PointController::class, 'StaticView'])->name('static.view');
+ //   route::get('course/{course_id}/class/{class_id}/static', [PointController::class, 'getStatic'])->name('static.main');
+    // Route::get('static', function () {
+    //     return view('pages.backend.statistic.index');
+    // });
 
     //unit
     route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);

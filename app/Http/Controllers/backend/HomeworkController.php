@@ -11,23 +11,21 @@ use App\models\Homework;
 class HomeworkController extends Controller
 {
     public function getHomework($id){
-        $homework = Homework::query()->with('unit')->where('course_id',$id)->get();
+        $homework = Homework::query()->where('course_id',$id)->get();
         $course= Course::find($id);
         return view('pages.backend.homework.main',compact('homework','course'));
     }
-    public function getcreateHomework($course_id){
-        $course = Course::find($course_id);
-        $unit = Unit::query()->get();
-        return view('pages.backend.homework.create',compact('course','unit'));
+    public function getcreateHomework($id){
+        $course = Course::find($id);
+        return view('pages.backend.homework.create',compact('course'));
     }
-    public function postcreateHomework(request $request, $course_id){
+    public function postcreateHomework(request $request, $id){
         $homework = Homework::create([
             'title'=>$request->title,
-            'description'=>$request->description,
-            'course_id'=>$request->course_id,
-            'unit_id'=>$request->unit_id,
+            'content'=>$request->content,
+            'course_id'=>$id
         ]);
-        return redirect(('/admin/course').'/'.$course_id.'/homework');
+        return redirect(('/admin/course').'/'.$id.'/homework');
     }
     public function getEditHomework($course_id,$id){
         $homework = Homework::query()->find($id);

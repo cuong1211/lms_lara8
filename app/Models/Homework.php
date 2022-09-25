@@ -12,11 +12,10 @@ class Homework extends Model
 
     protected $fillable = [
       'title',
+      'content',
       'course_id',
-      'lesson_id',
-      'excel',
     ];
     public function unit(){
-        return $this->belongsTo('App\models\Unit');
+        return $this->hasOne('App\models\Unit');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHomeworkTable extends Migration
+class CreateHomeworkClassTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateHomeworkTable extends Migration
      */
     public function up()
     {
-        Schema::create('homework', function (Blueprint $table) {
+        Schema::create('homework_class', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('course_id')->nullable();
+            $table->string('user_id')->nullable();
+            $table->string('unit_id')->nullable();
+            $table->string('class_id')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateHomeworkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homework');
+        Schema::dropIfExists('homework_class');
     }
 }

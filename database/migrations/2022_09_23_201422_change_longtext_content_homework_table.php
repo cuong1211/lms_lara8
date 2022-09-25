@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHomeworkTable extends Migration
+class ChangeLongtextContentHomeworkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateHomeworkTable extends Migration
      */
     public function up()
     {
-        Schema::create('homework', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->nullable();
-            $table->string('course_id')->nullable();
-            $table->timestamps();
+        Schema::table('homework', function (Blueprint $table) {
+            $table->longtext('content')->change();
         });
     }
 
@@ -28,6 +25,6 @@ class CreateHomeworkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homework');
+        //
     }
 }

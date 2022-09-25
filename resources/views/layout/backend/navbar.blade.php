@@ -60,6 +60,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="side-nav-item">
+                <a href="{{route('mark.index')}}" class="side-nav-link">
+                    <i class="uil-home-alt"></i>
+                    <span>CHẤM ĐIỂM</span>
+                </a>
+            </li>
         </ul>
         <!-- End Sidebar -->
 

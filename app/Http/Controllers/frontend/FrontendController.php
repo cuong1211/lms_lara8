@@ -17,8 +17,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Classes;
 use App\Models\Homework;
 use App\Models\Zoom;
+use App\Models\Homework_class;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Concerns\ToArray;
+
 
 class FrontendController extends Controller
 {
@@ -77,7 +80,17 @@ class FrontendController extends Controller
         return view('pages.frontend.result', compact('data','correct_answers_array_filtered', 'answers_array', 'correct_answers_count', 'question_count', 'point'));
 
     }
-    public function showHW(){
-        return view('pages.frontend.Homework');
+    public function showHW($user_id,$class_id,$course_id,$unit_id,$id){
+        $homework = Homework::find($id);
+        return view('pages.frontend.Homework',compact('homework','unit_id','course_id','class_id','user_id','id'));
+    }
+    public function postHW($user_id,$class_id,$course_id,$unit_id,$id,Request $request){
+        $homework = Homework_class::create([
+            'user_id'=>$user_id,
+            'unit_id'=>$unit_id,
+            'class_id'=>$class_id,
+            'link'=>$request->link,
+        ]);
+        return redirect()->back();
     }
 }

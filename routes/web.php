@@ -15,6 +15,8 @@ use App\Http\Controllers\backend\SlideController;
 use App\Http\Controllers\backend\ClassController;
 use App\Http\Controllers\backend\PointController;
 use App\Http\Controllers\backend\QuizController;
+use App\Http\Controllers\backend\HomeworkController;
+use App\Http\Controllers\backend\MarkController;
 use App\Http\Middleware\checkAdminLogin;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
@@ -41,15 +43,14 @@ Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], funct
     route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{id}', [FrontendController::class, 'getUnit'])->name('frontend.unit');
     Route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showQuiz'])->name('frontend.quiz');
     Route::post('user/{user_id}/class/{class_id}course/{course_id}/lesson/{unit_id}/quiz/{id}', [FrontendController::class,'showResult'])->name('frontend.result');
-    route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/homework',[FrontendController::class,'showHW'])->name('frontend.homework');
-    route::post('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/homework',[FrontendController::class,'postHW'])->name('frontend.posthomework');
+    route::get('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/homework/{id}',[FrontendController::class,'showHW'])->name('frontend.homework');
+    route::post('user/{user_id}/class/{class_id}/course/{course_id}/lesson/{unit_id}/homework/{id}',[FrontendController::class,'postHW'])->name('frontend.posthomework');
     Route::any('/createmeetingsupport',[ZoomController::class,'postCreateSupport'])->name('zoom.support');
 });
 route::group(['Middleware'=>['web'],['api']], function () {
     route::get('/login', [LoginController::class, 'getLogin']);
     route::post('/login', [LoginController::class, 'postLogin']);
     route::get('/logout', [LoginController::class, 'getLogout']);
-    
     //register
     route::get('admin/register', [RegisterController::class, 'getRegister']);
     route::post('admin/register', [RegisterController::class, 'postRegister']);
@@ -84,6 +85,11 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/class/{class_id}/point', [PointController::class, 'getPoint'])->name('point.main');
     route::get('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'editPoint'])->name('point.edit');
     route::post('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'postEditPoint'])->name('point.postedit');
+
+    //mark score
+    route::get('mark',[MarkController::class,'Index'])->name('mark.index');
+    route::get('mark/class/{id}/unit',[MarkController::class,'IndexUnit'])->name('mark.class');
+    route::get('mark/class/{class_id}/unit/{id}/students',[MarkController::class,'IndexStudents'])->name('mark.unit');
 
     //Statistic
     route::get('course/{course_id}/class/{class_id}/static', [PointController::class, 'getStatic'])->name('static.main');
@@ -153,19 +159,18 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
 
 
     //homework
-    route::get('/homework', [HomeworkController::class, 'getHomework']);
-    route::get('/createhomework', [HomeworkController::class, 'getcreateHomework']);
-    route::post('/createhomework', [HomeworkController::class, 'postcreateHomework']);
-    route::get('/edithomework/{id}', [HomeworkController::class, 'getEditHomework']);
-    route::post('/edithomework/{id}', [HomeworkController::class, 'editHomework']);
-    route::get('/deletehomework/{id}', [HomeworkController::class, 'deleteHomework']);
+    route::get('course/{id}/homework', [HomeworkController::class, 'getHomework'])->name('homework.main');
+    route::get('course/{id}/createhomework', [HomeworkController::class, 'getcreateHomework'])->name('homework.create');
+    route::post('course/{id}/createhomework', [HomeworkController::class, 'postcreateHomework'])->name('homework.postcreate');
+    route::get('course/{id}/edithomework/{id}', [HomeworkController::class, 'getEditHomework'])->name('homework.edit');
+    route::post('course/{id}/edithomework/{id}', [HomeworkController::class, 'editHomework'])->name('homework.postedit');
+    route::get('course/{id}/deletehomework/{id}', [HomeworkController::class, 'deleteHomework'])->name('homework.delete');
     
     //quiz
     Route::get('course/{id}/quiz', [QuizController::class,'index']);
     Route::get('course/{course_id}/quiz/{id}/show', [QuizController::class,'show']);
     Route::get('course/{course_id}/createquiz', [QuizController::class,'create']);
     Route::post('course/{course_id}/createquiz', [QuizController::class,'store']);
-    
     Route::delete('course/{course_id}/{quiz}', [QuizController::class,'destroy']);
     // //quiz
     // route::get('/quiz', [TestController::class, 'getTest']);

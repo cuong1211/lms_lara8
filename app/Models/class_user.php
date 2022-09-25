@@ -26,6 +26,10 @@ class class_user extends Model
       {
         return $this->belongsTo('App\Models\user','user_id','id');
       }
+      public function homework_class()
+      {
+        return $this->belongsTo(Homework_class::class);
+      }
       
       
 }

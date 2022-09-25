@@ -29,6 +29,12 @@
                                     class="btn btn-dark">CÂU HỎI</a>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <a href="{{ url('/admin/course') . '/' . $course->id . '/homework' }}"
+                                    class="btn btn-dark">BÀI TẬP VỀ NHÀ</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -86,10 +92,10 @@
                                 @endif
                             </td>
                             <td>
-                                @if ($item->homework == null)
+                                @if ($item->homework_id == null)
                                     Không có
                                 @else
-                                    {{ $item->homework }}
+                                    {{ $item->homework->title }}
                                 @endif
                             <td class="table-action">
                                 <a href="{{ url('/admin/course') . '/' . $course->id . '/unit' . '/' . $item->id . '/edit' }}"

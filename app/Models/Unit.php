@@ -30,10 +30,7 @@ class Unit extends Model
         return $this->hasOne('App\models\Test','unit_id');
     }
     public function homework(){
-        return $this->HasMany('App\models\Homework','unit_id','homework_id');
-    }
-    public function exam(){
-        return $this->HasMany('App\models\Exam','unit_id','exam_id');
+        return $this->belongsTo('App\models\Homework');
     }
     public function quiz(){
         return $this->belongsTo('App\models\Quiz','quizzes_id');

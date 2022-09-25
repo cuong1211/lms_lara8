@@ -21,20 +21,33 @@
                         <input type="text" name="description" class="form-control" value="{{ $unit->description }}">
                     </div>
                 </div>
-
-                <div class="form-group col-sm-6">
-                    <label for="uname">Slide:</label>
-                    <select class="form-control" name="slide_id" id="email">
+                <div class="input-group col-sm-6 mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">SLIDE:</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="slide_id">
                         @foreach ($slide as $item)
                             <option value="{{ $item->id }}">{{ $item->title }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-sm-6">
-                    <label for="uname">Bai tap:</label>
-                    <select class="form-control" name="quizzes_id" id="email">
+                <div class="input-group col-sm-6 mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">BÀI TẬP:</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="quizzes_id">
                         @foreach ($quiz as $item)
                             <option value="{{ $item->id }}">{{ $item->quiz }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="input-group col-sm-6 mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">BÀI TẬP VỀ NHÀ:</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" name="homework_id">
+                        @foreach ($homework as $item)
+                            <option value="{{ $item->id }}">{{ $item->title }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -35,7 +35,7 @@ use App\Http\Middleware\CheckLogin;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.auth.login');
 });
 Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], function () {
     route::get('user/{user_id}/course', [FrontendController::class, 'getCourse'])->name('frontend.course');
@@ -92,8 +92,12 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('mark/class/{class_id}/unit/{id}/students',[MarkController::class,'IndexStudents'])->name('mark.unit');
 
     //Statistic
-    route::get('course/{course_id}/class/{class_id}/static', [PointController::class, 'getStatic'])->name('static.main');
-
+    route::get('static', [PointController::class, 'StaticIndex'])->name('static.index');
+    route::get('static/{id_class}', [PointController::class, 'StaticView'])->name('static.view');
+ //   route::get('course/{course_id}/class/{class_id}/static', [PointController::class, 'getStatic'])->name('static.main');
+    // Route::get('static', function () {
+    //     return view('pages.backend.statistic.index');
+    // });
 
     //unit
     route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);

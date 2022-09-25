@@ -66,6 +66,14 @@
                     <span>CHẤM ĐIỂM</span>
                 </a>
             </li>
+                <a href="{{url('/admin/static')}}" class="side-nav-link">
+                    <i class="uil-home-alt"></i>
+                    <span> THỐNG KÊ </span>
+                </a>
+               
+            </li>
+            
+
         </ul>
         <!-- End Sidebar -->
 

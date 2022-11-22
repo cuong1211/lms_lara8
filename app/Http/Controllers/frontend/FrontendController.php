@@ -25,9 +25,12 @@ use Maatwebsite\Excel\Concerns\ToArray;
 
 class FrontendController extends Controller
 {
+    public function getUserId($user_id){
+        return class_user::query()->where('user_id',$user_id);
+    }
     public function getCourse($user_id){;
         $class_course = [];
-        $class_user = class_user::query()->where('user_id',$user_id)->get()->toarray();
+        $class_user = $this->getUserId($user_id)->get()->toarray();
         foreach ($class_user as $key=>$value){  
             $class = Classes::query()->where('id',$value['class_id'])->with('course')->get()->toArray(); 
             $class_course[] = $class[0];
@@ -37,7 +40,7 @@ class FrontendController extends Controller
     }
     public function getLesson($user_id,$class_id,$id){
         $course = Course::find($id);
-        $class_user = class_user::query()->where('user_id',$user_id)->with('classes')
+        $class_user = $this->getUserId($user_id)->with('classes')
             ->whereHas('classes', function (Builder $query) use ($id) {
                 $query->where('course_id', $id);
             })->get()->toArray();

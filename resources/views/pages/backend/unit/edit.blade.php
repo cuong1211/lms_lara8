@@ -7,7 +7,8 @@
             </div>
         </div>
         <div class="iq-card-body">
-            <form class="form-horizontal" action="{{ url('/admin/course') . '/' . $course->id . ('/unit').'/'.$unit->id.('/edit') }}" method="POST">
+            <form class="form-horizontal"
+                action="{{ url('/admin/course') . '/' . $course->id . '/unit' . '/' . $unit->id . '/edit' }}" method="POST">
                 @csrf
                 <div class="form-group row">
                     <label class="control-label col-sm-2 align-self-center mb-0" for="email">Tên bài:</label>
@@ -27,7 +28,11 @@
                     </div>
                     <select class="custom-select" id="inputGroupSelect01" name="slide_id">
                         @foreach ($slide as $item)
-                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            @if ($item->id == $unit->slide_id)
+                                <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
+                            @else
+                                <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -37,7 +42,11 @@
                     </div>
                     <select class="custom-select" id="inputGroupSelect01" name="quizzes_id">
                         @foreach ($quiz as $item)
-                            <option value="{{ $item->id }}">{{ $item->quiz }}</option>
+                            @if ($item->id == $unit->quizzes_id)
+                                <option value="{{ $item->id }}" selected>{{ $item->quiz }}</option>
+                            @else
+                                <option value="{{ $item->id }}">{{ $item->quiz }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -47,13 +56,17 @@
                     </div>
                     <select class="custom-select" id="inputGroupSelect01" name="homework_id">
                         @foreach ($homework as $item)
-                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            @if ($item->id == $unit->homework_id)
+                                <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
+                            @else
+                                <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-sm-6">
                     <label for="uname">Nội dung:</label>
-                    <textarea name="content" id="text-content">{{$unit->content}}</textarea>
+                    <textarea name="content" id="text-content">{{ $unit->content }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -64,7 +77,6 @@
     </div>
 @endsection
 @push('js')
-
     <script>
         $(document).ready(function() {
             $('#text-content').summernote({

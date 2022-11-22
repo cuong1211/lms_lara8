@@ -25,7 +25,11 @@
                     <label for="uname">ZOOM</label>
                     <select class="form-control" name="zoom_id" id="email">
                         @foreach ($zoom as $item)
-                            <option value="{{ $item->id }}">{{ $item->topic }}</option>
+                            @if ($item->id == $teacher->zoom_id)
+                                <option value="{{ $item->id }}" selected>{{ $item->topic }}</option>
+                            @else
+                                <option value="{{ $item->id }}" >{{ $item->topic }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

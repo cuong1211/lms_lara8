@@ -164,11 +164,11 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
 
     //homework
     route::get('course/{id}/homework', [HomeworkController::class, 'getHomework'])->name('homework.main');
-    route::get('course/{id}/createhomework', [HomeworkController::class, 'getcreateHomework'])->name('homework.create');
-    route::post('course/{id}/createhomework', [HomeworkController::class, 'postcreateHomework'])->name('homework.postcreate');
-    route::get('course/{id}/edithomework/{id}', [HomeworkController::class, 'getEditHomework'])->name('homework.edit');
-    route::post('course/{id}/edithomework/{id}', [HomeworkController::class, 'editHomework'])->name('homework.postedit');
-    route::get('course/{id}/deletehomework/{id}', [HomeworkController::class, 'deleteHomework'])->name('homework.delete');
+    route::get('course/{course_id}/createhomework', [HomeworkController::class, 'getcreateHomework'])->name('homework.create');
+    route::post('course/{course_id}/createhomework', [HomeworkController::class, 'postcreateHomework'])->name('homework.postcreate');
+    route::get('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'getEditHomework'])->name('homework.edit');
+    route::post('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'editHomework'])->name('homework.postedit');
+    route::get('course/{course_id}/deletehomework/{id}', [HomeworkController::class, 'deleteHomework'])->name('homework.delete');
     
     //quiz
     Route::get('course/{id}/quiz', [QuizController::class,'index']);

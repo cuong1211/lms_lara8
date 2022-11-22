@@ -24,9 +24,9 @@ class MarkController extends Controller
     }
     public function IndexStudents($class_id,$id){
         $students= class_user::query()->where('class_id',$class_id)->with('user','homework_class')->get();
-        dd($students);
+        // dd($students);
         $homework_class=Homework_class::query()->with('user')->where('unit_id',$id)->get();
-        // dd($class_user);
+        // dd($homework_class);
         return view('pages.backend.homework.class_mark',compact('students','homework_class'));
     }
 }

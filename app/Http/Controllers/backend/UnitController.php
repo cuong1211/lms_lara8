@@ -41,6 +41,7 @@ class UnitController extends Controller
     }
     public function getEditUnit($course_id,$id){
         $unit = Unit::query()->find($id);
+        // dd($unit);
         $course = Course::find($course_id);
         $slide = Slide::query()->get();
         $quiz= Quiz::query()->get();

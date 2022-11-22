@@ -26,7 +26,13 @@
                         <tr>
                             <td>{{ $count }}</td>
                             <td>{{ $item->user->name }}</td>
-                            <td>{{$homework_class}}</td>
+                            <td>
+                                @if ($homework_class->where('user_id', $item->user->id) == null)
+                                    CHUA NOP BAI
+                                @else
+                                    {{ $homework_class->where('user_id', $item->user->id) }}
+                                @endif
+                            </td>
                         </tr>
 
                         @php

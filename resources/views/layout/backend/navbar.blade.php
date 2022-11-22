@@ -249,8 +249,8 @@
                         <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                     </span>
                     <span>
-                        <span class="account-user-name">{{ Auth::user()->name}}</span>
-                        <span class="account-position">{{App\Models\Role::find(Auth::user()->id)->name }}</span>
+                        <span class="account-user-name">{{Auth::user()->name}}</span>
+                        <span class="account-position">{{App\Models\Role::find(Auth::user()->role_id)->name }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown">

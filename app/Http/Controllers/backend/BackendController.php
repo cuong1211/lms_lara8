@@ -11,6 +11,8 @@ class BackendController extends Controller
 {
     public function index()
     {
+        Auth::user();
+        // dd(Auth::user()->name);
         return view('pages.backend.main');
     }
     public function getCourse()

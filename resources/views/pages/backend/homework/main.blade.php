@@ -7,7 +7,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ route('homework.create',['id'=>$course->id]) }}" class="btn btn-dark"><i
+                                <a href="{{ route('homework.create',['course_id'=>$course->id]) }}" class="btn btn-dark"><i
                                         class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
                             </div>
                         </div>

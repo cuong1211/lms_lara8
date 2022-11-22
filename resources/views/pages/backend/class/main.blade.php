@@ -40,10 +40,16 @@
                         <tr>
                             <td>{{ $count }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->user->name }}</td>
+                            <td>
+                                @if ($item->user_id == null)
+                                    <p>Chưa có giáo viên</p>
+                                @else
+                                    {{ $item->user->name }}
+                                @endif
                             <td class="table-action">
-                                <a href="{{ route('class.detail',['course_id'=>$course->id,'id'=>$item->id]) }}"><button type="button" class="btn btn-primary">Chi tiết</button></a>
-                                
+                                <a href="{{ route('class.detail', ['course_id' => $course->id, 'id' => $item->id]) }}"><button
+                                        type="button" class="btn btn-primary">Chi tiết</button></a>
+
                                 <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
                                 <a href="" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                             </td>
@@ -56,6 +62,4 @@
             </table>
         </div>
     </div>
-
-    
 @endsection

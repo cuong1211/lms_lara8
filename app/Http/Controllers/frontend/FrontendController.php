@@ -53,6 +53,7 @@ class FrontendController extends Controller
         $teacher = Classes::query()->where('id',$class_id)->with('user')->first();
         $zoom_id  = $teacher->user->zoom_id;
         $zoom = Zoom::query()->where('id',$zoom_id)->first();
+        // dd($teacher);
         return view('pages.frontend.unit',compact('unit','teacher','user_id','class_id','course_id','zoom'));
 
     }

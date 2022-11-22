@@ -23,10 +23,17 @@ class MarkController extends Controller
         return view('pages.backend.homework.unit_mark',compact('unit','id'));
     }
     public function IndexStudents($class_id,$id){
-        $students= class_user::query()->where('class_id',$class_id)->with('user','homework_class')->get();
-        // dd($students);
-        $homework_class=Homework_class::query()->with('user')->where('unit_id',$id)->get();
-        // dd($homework_class);
+        $students= class_user::query()->where('class_id',$class_id)->with('user')->get();
+        $homework_class=Homework_class::query()->where('unit_id',$id)->get();
+        // dd($students,$homework_class);
+        foreach($students as $item){
+            foreach($homework_class as $item2){
+                if($item->user_id==$item2->user_id){
+                    $a = $item2->link;
+                    // dd($a);
+                }
+            }
+        }
         return view('pages.backend.homework.class_mark',compact('students','homework_class'));
     }
 }

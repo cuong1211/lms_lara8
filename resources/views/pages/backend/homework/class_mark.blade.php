@@ -23,21 +23,26 @@
                         
                     @endphp
                     @foreach ($students as $item)
-                        <tr>
-                            <td>{{ $count }}</td>
-                            <td>{{ $item->user->name }}</td>
-                            <td>
-                                @if ($homework_class->where('user_id', $item->user->id) == null)
-                                    CHUA NOP BAI
-                                @else
-                                    {{ $homework_class->where('user_id', $item->user->id) }}
-                                @endif
-                            </td>
-                        </tr>
-
-                        @php
-                            $count++;
-                        @endphp
+                        @foreach ($homework_class as $item2)
+                            @if ($item->user_id == $item2->user_id)
+                                <tr>
+                                    <td>{{ $count }}</td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        @if ($item2->link == null)
+                                            CHƯA NỘP BÀI
+                                        @else
+                                            <a href="{{ $item2->link }}" target="_blank">
+                                                <button class="btn btn-primary">XEM BÀI</button>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @php
+                                    $count++;
+                                @endphp
+                            @endif
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>

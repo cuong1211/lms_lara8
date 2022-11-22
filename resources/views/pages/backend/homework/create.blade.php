@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <form class="form-horizontal" action="{{ route('homework.create',['id'=>$course->id]) }}" method="POST"> 
+            <form class="form-horizontal" action="{{ route('homework.create',['course_id'=>$course->id]) }}" method="POST"> 
                 @csrf
                 <div class="form-group">
                     <label for="simpleinput">TÊN BÀI TẬP:</label>

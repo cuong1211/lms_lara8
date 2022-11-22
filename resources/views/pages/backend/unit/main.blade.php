@@ -119,8 +119,13 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <iframe src="{{ $item->slide->link }}" frameborder="0" width="100%"
+                                        @if ($item->slide_id == null)
+                                            Không có
+                                        @else
+                                            <iframe src="{{ $item->slide->link}}" frameborder="0" width="100%"
                                             height="500"></iframe>
+                                        @endif
+                                    
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

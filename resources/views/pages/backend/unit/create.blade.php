@@ -27,8 +27,8 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">SLIDE:</label>
                     </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Chọn</option>
+                    <select class="custom-select" id="inputGroupSelect01" name="slide_id">
+                        
                         @foreach ($slide as $item)
                             <option value="{{ $item->id }}">{{ $item->title }}</option>
                         @endforeach
@@ -38,8 +38,8 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">BÀI TẬP:</label>
                     </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Chọn</option>
+                    <select class="custom-select" id="inputGroupSelect01" name="quizzes_id">
+                        
                         @foreach ($quiz as $item)
                             <option value="{{ $item->id }}">{{ $item->quiz }}</option>
                         @endforeach
@@ -49,8 +49,8 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">BÀI TẬP VỀ NHÀ:</label>
                     </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Chọn</option>
+                    <select class="custom-select" id="inputGroupSelect01" name="homework_id">
+                        
                         @foreach ($homework as $item)
                             <option value="{{ $item->id }}">{{ $item->title }}</option>
                         @endforeach

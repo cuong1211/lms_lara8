@@ -1,37 +1,19 @@
 
+@push('namepage')
+    Home
+@endpush
 @extends('layout.backend.index')
+@section('title')
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">TRANG CHỦ</h4>
+        </div>
+    </div>
+</div>
+@endsection
 @section('content')
 <div class="content">
-    <!-- Start Content-->
-    <div class="container-fluid">
-
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control form-control-light" id="dash-daterange">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-success border-success text-white">
-                                            <i class="mdi mdi-calendar-range font-13"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="javascript: void(0);" class="btn btn-success ml-2">
-                                <i class="mdi mdi-autorenew"></i>
-                            </a>
-                        </form>
-                    </div>
-                    <h4 class="page-title">Vertical</h4>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
         <div class="row">
             <div class="col-xl-5 col-lg-6">
 

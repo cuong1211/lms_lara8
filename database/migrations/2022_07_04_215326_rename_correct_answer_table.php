@@ -23,6 +23,6 @@ class RenameCorrectAnswerTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::rename('correct_answers', 'correct_answer');
     }
 }

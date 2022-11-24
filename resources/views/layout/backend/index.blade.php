@@ -5,20 +5,55 @@
     @include('layout.backend.source')
 </head>
 
-<body class="loading"
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+<body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
     <div class="wrapper">
-        @include('layout.backend.navbar')
+        <!-- ========== Left Sidebar Start ========== -->
+        @include('layout.backend.sidebar')
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
         <div class="content-page">
-            @yield('content')
-        </div>
-        <!-- Footer Start -->
-        <footer class="footer">
+            <div class="content">
+                <!-- Topbar Start -->
+                @include('layout.backend.header')
+                <!-- end Topbar -->
+                
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                   @yield('title')
+                    <!-- end page title -->
+
+                    @yield('content')
+
+                </div>
+                <!-- container -->
+
+            </div>
+            <!-- content -->
+
+            <!-- Footer Start -->
             @include('layout.backend.footer')
-        </footer>
+            <!-- end Footer -->
+            @yield('js')
+            @stack('jscustom')
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
     </div>
-    @stack('js')
+    <!-- END wrapper -->
+
+
+    
 </body>
 
 </html>

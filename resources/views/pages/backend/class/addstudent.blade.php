@@ -49,7 +49,7 @@
         </form>
     </div>
 </div>
-    @push('js')
+    @push('jscustom')
         <script>
             function selects() {
                 var checkboxes = document.getElementsByClassName('checkBoxClass');

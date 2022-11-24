@@ -6,15 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use Intervention\Image\Facades\Image;
+use Yajra\Datatables\Datatables;
 
 class CourseController extends Controller
 {
     public function getCourse(){
-        $course = Course::query()->get();
-        return view('pages.backend.course.main',compact('course'));
+        return view('pages.backend.course.main');
     }
-    public function getcreateCourse(){
-        return view('pages.backend.course.create');
+    public function showCourse($id){
+
+        switch ($id) {
+            case 'get-list':
+                $course = Course::query();
+                return Datatables::of($course)->make(true);
+                break;
+            default:
+                break;
+        }
     }
     public function postcreateCourse(request $request){
         $course = new Course;
@@ -27,11 +35,23 @@ class CourseController extends Controller
             $course->img = $name;
         }
         $course->save();
-        return redirect('/admin/course');
-    }
-    public function getEditCourse($id){
-        $course = Course::query()->find($id);
-        return view('pages.backend.course.edit',compact('course'));
+        if($course){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
     public function editCourse(request $request,$id){
         $course = Course::query()->find($id);
@@ -39,11 +59,44 @@ class CourseController extends Controller
             'name'=>$request->name,
             'start_time'=>$request->start_time,
         ]);
-        return redirect()->back();
+        if($course){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Sửa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Sửa thất bại'
+                ]
+            );
+        };
+        
     }
     public function deleteCourse($id){
-        $course = Course::query()->find($id);
+        $course = Course::find($id);
         $course->delete();
-        return redirect()->back();
+        if($course){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xoá thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xoá thất bại'
+                ]
+            );
+        };
     }
 }

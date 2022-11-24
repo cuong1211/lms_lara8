@@ -15,6 +15,7 @@
                         <th>STT</th>
                         <th>HỌC SINH</th>
                         <th>TRẠNG THÁI</th>
+                        <th>ĐIỂM</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,26 +24,32 @@
                         
                     @endphp
                     @foreach ($students as $item)
-                        @foreach ($homework_class as $item2)
-                            @if ($item->user_id == $item2->user_id)
-                                <tr>
-                                    <td>{{ $count }}</td>
-                                    <td>{{ $item->user->name }}</td>
-                                    <td>
-                                        @if ($item2->link == null)
-                                            CHƯA NỘP BÀI
-                                        @else
-                                            <a href="{{ $item2->link }}" target="_blank">
-                                                <button class="btn btn-primary">XEM BÀI</button>
-                                            </a>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @php
-                                    $count++;
-                                @endphp
-                            @endif
-                        @endforeach
+                        <tr>
+                            <td>{{ $count }}</td>
+                            <td>{{ $item->user->name }}</td>
+                            <td>
+                                @foreach ($homework_class as $item2)
+                                    @if ($item->user_id == $item2->user_id)
+                                        <a href="{{ $item2->link }}" target="_blank">
+                                            <button class="btn btn-primary">XEM BÀI</button>
+                                        </a>
+                                    @else
+                                        <span class="alert alert-danger">CHƯA NỘP</span>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                <form action="" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{ $item->user_id }}">
+                                    <input type="number" name="mark" value="{{ $item->mark }}">
+                                    <button type="submit" class="btn btn-primary">LƯU</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @php
+                            $count++;
+                        @endphp
                     @endforeach
                 </tbody>
             </table>

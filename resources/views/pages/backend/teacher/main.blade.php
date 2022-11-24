@@ -52,13 +52,13 @@
                                     {{ $item->zoom->topic }}
                                 @endif
                             </td>
-                            <td>
+                            {{-- <td>
                                 @if ($item->status == 1)
                                     <span class="badge badge-success">Hoạt động</span>
                                 @else
                                     <span class="badge badge-danger">Không hoạt động</span>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td class="table-action">
                                 <a href="{{ url('admin/teacher' . '/' . $item->id . '/edit') }}" class="action-icon"> <i
                                         class="mdi mdi-pencil"></i></a>

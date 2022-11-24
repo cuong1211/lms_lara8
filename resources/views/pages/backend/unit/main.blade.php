@@ -1,4 +1,16 @@
+@push('namepage')
+    Quản lý bài học
+@endpush
 @extends('layout.backend.index')
+@section('title')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Quản lý bài học</h4>
+            </div>
+        </div>
+    </div>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -7,32 +19,27 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . '/createunit' }}"
-                                    class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM BÀI HỌC</i></a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM BÀI HỌC</i></a>
                             </div>
                         </div>
                     </form>
                 </div>
-                <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
-                <h4 class="page-title">BÀI HỌC</h4>
-                <div class="page-title-right">
+                <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
+                <div class="page-title-right button-list card-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . '/slide' }}"
-                                    class="btn btn-dark">SLIDE</a>
+                                <a href="{{ route('slide.main',['course_id'=>$course_id]) }}" class="btn btn-primary">SLIDE</a>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . '/quiz' }}"
-                                    class="btn btn-dark">CÂU HỎI</a>
+                                <a href="{{route('quiz.main',['course_id'=>$course_id])}}" class="btn btn-info">CÂUHỎI</a>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . '/homework' }}"
-                                    class="btn btn-dark">BÀI TẬP VỀ NHÀ</a>
+                                <a href="{{ route('homework.main',['course_id'=>$course_id]) }}" class="btn btn-success">BÀI TẬP VỀ NHÀ</a>
                             </div>
                         </div>
                     </form>
@@ -42,62 +49,75 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-striped table-centered mb-0">
+            <table id="datatable" class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
-                        <th>STT</th>
-                        <th>BÀI HỌC</th>
-                        <th>NỘI DUNG</th>
-                        <th>SLIDE</th>
-                        <th>QUIZ</th>
-                        <th>HOMEWORK</th>
-                        <th>Action</th>
+                        <th class="text-center">Stt</th>
+                        <th class="text-center">Bài học</th>
+                        <th class="text-center">Nội dung</th>
+                        <th class="text-center">Slide</th>
+                        <th class="text-center">Câu hỏi</th>
+                        <th class="text-center">Bài tập về nhà</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @php
                         $count = 1;
                         
                     @endphp
                     @foreach ($unit as $item)
                         <tr>
-                            <td>{{ $count }}</td>
+                            <td class="text-center">{{ $count }}</td>
 
-                            <td>{{ $item->title }}:{{ $item->description }}</td>
-                            <td>
+                            <td class="text-center">{{ $item->title }}: {{ $item->description }}</td>
+                            <td class="text-center">
                                 @if (isset($item->content))
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#exampleModalLong{{$item->id}}">
+                                        data-target="#exampleModalLong{{ $item->id }}">
                                         Xem
                                     </button>
+                                @else
+                                    Không có
                                 @endif
-                                
+
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @if ($item->slide_id == null)
                                     Không có
                                 @else
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#exampleModalCenter{{$item->id}}">
-                                        Truy cập
-                                    </button>
+                                    @if (App\models\Homework::find($item->homework_id) == null)
+                                        Không có
+                                    @else
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target="#exampleModalCenter{{ $item->id }}">
+                                            Truy cập
+                                        </button>
+                                    @endif
                                 @endif
-                                {{-- <a href="{{ $item->slide->link }}"> --}}
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @if ($item->quizzes_id == null)
                                     Không có
                                 @else
-                                    {{ $item->quiz->quiz }}
+                                    @if (App\models\Homework::find($item->quizzes_id) == null)
+                                        Không có
+                                    @else
+                                        {{ $item->quiz->quiz }}
+                                    @endif
                                 @endif
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @if ($item->homework_id == null)
                                     Không có
                                 @else
-                                    {{ $item->homework->title }}
+                                    @if (App\models\Homework::find($item->homework_id) == null)
+                                        Không có
+                                    @else
+                                        {{ $item->homework->title }}
+                                    @endif
                                 @endif
-                            <td class="table-action">
+                            <td class="table-action text-center">
                                 <a href="{{ url('/admin/course') . '/' . $course->id . '/unit' . '/' . $item->id . '/edit' }}"
                                     class="action-icon"> <i class="mdi mdi-pencil"></i></a>
                                 <a href="{{ url('/admin/course') . '/' . $course->id . ('/unit' . '/' . $item->id . '/delete') }}"
@@ -107,8 +127,8 @@
                         @php
                             $count++;
                         @endphp
-                        {{-- modal slide --}}
-                        <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog"
+                        
+                        <div class="modal fade" id="exampleModalCenter{{ $item->id }}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -122,10 +142,10 @@
                                         @if ($item->slide_id == null)
                                             Không có
                                         @else
-                                            <iframe src="{{ $item->slide->link}}" frameborder="0" width="100%"
-                                            height="500"></iframe>
+                                            <iframe src="{{ $item->slide->link }}" frameborder="0" width="100%"
+                                                height="500"></iframe>
                                         @endif
-                                    
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -133,8 +153,8 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- modal content --}}
-                        {{-- <div class="modal fade bd-example-modal-lg" id="exampleModalLong{{$item->id}}" tabindex="-1" role="dialog" 
+                        
+                        <div class="modal fade bd-example-modal-lg" id="exampleModalLong{{$item->id}}" tabindex="-1" role="dialog" 
                             aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -154,10 +174,20 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                     @endforeach
-                </tbody>
+                </tbody> --}}
             </table>
+            @include('pages.backend.unit.modal')
         </div>
     </div>
 @endsection
+@push('jscustom')
+    <!-- Datatables js -->
+    <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="assets/js/vendor/responsive.bootstrap4.min.js"></script>
+
+    @include('pages.backend.unit.js')
+@endpush

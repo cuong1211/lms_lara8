@@ -12,17 +12,26 @@ use App\Models\CorrectAnswer;
 use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class QuizController extends Controller
 {
-    public function index($id)
+    public function index($course_id)
     {
-        $course = Course::find($id);
-        $quizzes = Quiz::query()->where('course_id',$id)->get();
-        return view('pages.backend.quiz.main',compact('quizzes','course'));
+        return view('pages.backend.quiz.main',compact('course_id'));
     }
+    public function show($course_id,$id){
 
-    public function show($course_id,$id) {
+        switch ($id) {
+            case 'get-list':
+                $quiz = quiz::query()->where('course_id',$course_id);
+                return Datatables::of($quiz)->make(true);
+                break;
+            default:
+                break;
+        }
+    }
+    public function detail($course_id,$id) {
         $quiz = Quiz::find($id);
         $questions = Question::query()->where('quiz_id',$id)->get();
         $answers = Answer::query()->where('question_id',$id)->get();
@@ -52,11 +61,6 @@ class QuizController extends Controller
 
     }
 
-    public function create(Request $request, $course_id)
-    {   
-        $course = Course::find($course_id);
-        return view('pages.backend.quiz.create',compact('course'));
-    }
 
     public function store(Request $request)
     {
@@ -89,7 +93,23 @@ class QuizController extends Controller
                 }
             }
         }
-        return view('pages.backend.quiz.main');
+        if($quiz){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
 }
 

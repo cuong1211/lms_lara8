@@ -9,26 +9,29 @@ use Illuminate\Http\Request;
 use App\models\Unit;
 use App\models\Slide;
 use App\models\Quiz;
+use Yajra\Datatables\Datatables;
+
 class UnitController extends Controller
 {
-    public function getUnit($id){
-        $unit = Unit::query()->where('course_id',$id)->with('slide','quiz','homework')->get();
-        // dd($unit);
-        // $unit = Unit::query()->with('course','zoom','slide','quiz')->get();
-        $course= Course::find($id);
-        $slide = Slide::query()->get();
-        $quiz = Quiz::query()->get();
-        return view('pages.backend.unit.main',compact('unit','course','slide',"quiz"));
+    public function getUnit($course_id){
+        $slide = Slide::query()->where('course_id',$course_id)->get();
+        $quiz = Quiz::query()->where('course_id',$course_id)->get();
+        $homework = Homework::query()->where('course_id',$course_id)->get();
+        return view('pages.backend.unit.main',compact('slide','quiz','homework','course_id'));
     }
-    public function getcreateUnit($course_id){
-        $course = Course::find($course_id);
-        $slide = Slide::query()->get();
-        $quiz= Quiz::query()->get();
-        $homework= Homework::query()->get();
-        return view('pages.backend.unit.create',compact('course','slide','quiz','homework'));
+    public function showUnit($course_id,$id){
+        switch ($id) {
+            case 'get-list':
+                $unit = Unit::query()->where('course_id',$course_id)->with('slide','quiz','homework');
+                return Datatables::of($unit)->make(true);
+                break;
+            default:
+                break;
+        }
     }
     public function postcreateUnit(request $request, $course_id){
         $unit = Unit::create([
+            'course_id'=>$course_id,
             'title'=>$request->title,
             'description'=>$request->description,
             'content'=>$request->content,
@@ -37,16 +40,23 @@ class UnitController extends Controller
             'homework_id'=>$request->homework_id,
             'quizzes_id'=>$request->quizzes_id,
         ]);
-        return redirect(('/admin/course').'/'.$course_id.'/unit');
-    }
-    public function getEditUnit($course_id,$id){
-        $unit = Unit::query()->find($id);
-        // dd($unit);
-        $course = Course::find($course_id);
-        $slide = Slide::query()->get();
-        $quiz= Quiz::query()->get();
-        $homework= Homework::query()->get();
-        return view('pages.backend.unit.edit',compact('unit','course','slide','quiz','homework'));
+        if($unit){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
     public function posteditUnit(request $request,$course_id,$id){
         $unit = Unit::query()->find($id);
@@ -59,12 +69,44 @@ class UnitController extends Controller
             'quizzes_id'=>$request->quizzes_id,
             'homework_id'=>$request->homework_id,
         ]);
-        return redirect(('/admin/course').'/'.$course_id.'/unit');
+        if($unit){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Sửa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Sửa thất bại'
+                ]
+            );
+        };
     }
     public function deleteUnit($course_id,$id){
-        $unit = Unit::query()->find($id);
+        $unit = Unit::find($id);
         $unit->delete();
-        return redirect(('/admin/course').'/'.$course_id.'/unit');
+        if($unit){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xoá thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xoá thất bại'
+                ]
+            );
+        };
     }
     
 }

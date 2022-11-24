@@ -69,7 +69,7 @@
         </div>
     </div>
 @endsection
-@push('js')
+@push('jscustom')
 
     <script>
         $(document).ready(function() {

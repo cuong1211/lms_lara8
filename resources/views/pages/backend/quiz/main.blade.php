@@ -1,5 +1,4 @@
 @extends('layout.backend.index')
-
 @section('content')
     <!-- Bootstrap Boilerplate... -->
     <div class="panel-body">
@@ -9,8 +8,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('admin/course') . '/' . $course->id . '/createquiz' }}"
-                                    class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
                             </div>
                         </div>
                     </form>
@@ -21,7 +19,7 @@
         <!-- Display Validation Errors -->
         <div class="row">
             <div class="col-12">
-                <table class="table table-striped table-centered mb-0">
+                <table id="datatable" class="table dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -29,7 +27,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {{-- <tbody>
                         @php
                             $count = 1;
                             
@@ -38,7 +36,7 @@
                             <tr>
                                 <td>{{ $count }}</td>
                                 <td><a
-                                        href="{{ url('admin/course') . '/' . $course->id . '/quiz' . '/' . $quiz->id . '/show' }}">{{ $quiz->quiz }}</a>
+                                        href="{{ url('admin/course') . '/' . $id . '/quiz' . '/' . $quiz->id . '/show' }}">{{ $quiz->quiz }}</a>
                                 </td>
                                 <td class="table-action">
                                     <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
@@ -49,11 +47,21 @@
                                 $count++;
                             @endphp
                         @endforeach
-                    </tbody>
+                    </tbody> --}}
                 </table>
+            @include('pages.backend.quiz.modal')
             </div>
         </div>
     </div>
 
     </div>
 @endsection
+@push('jscustom')
+    <!-- Datatables js -->
+    <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="assets/js/vendor/responsive.bootstrap4.min.js"></script>
+
+    @include('pages.backend.quiz.js')
+@endpush

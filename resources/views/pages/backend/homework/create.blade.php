@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <form class="form-horizontal" action="{{ route('homework.create',['course_id'=>$course->id]) }}" method="POST"> 
+            <form class="form-horizontal" action="{{ route('homework.create', ['course_id' => $course->id]) }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="simpleinput">TÊN BÀI TẬP:</label>
@@ -28,25 +28,24 @@
             </form>
         </div>
     </div>
-    @push('js')
-
-    <script>
-        $(document).ready(function() {
-            $('#text-content').summernote({
-                height: 300,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['color', ['color']],
-                    ['pararagraph', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
+    @push('jscustom')
+        <script>
+            $(document).ready(function() {
+                $('#text-content').summernote({
+                    height: 300,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['pararagraph', ['ul', 'ol', 'paragraph']],
+                        ['height', ['height']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ]
+                });
             });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
 @endsection

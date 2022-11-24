@@ -59,16 +59,17 @@ route::group(['Middleware'=>['web'],['api']], function () {
 
 Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'namespace' => 'backend'], function () {
     //backend
-    route::get('/', [BackendController::class, 'index']);
+    route::get('/', [BackendController::class, 'index'])->name('backend.home');
     route::get('/pre_course', [BackendController::class, 'getCourse']);
 
     //course    
     route::get('/course', [CourseController::class, 'getCourse']);
+    route::get('/course/{id}', [CourseController::class, 'showCourse'])->name('course.show');
     route::get('/createcourse', [CourseController::class, 'getcreateCourse']);
-    route::post('/createcourse', [CourseController::class, 'postcreateCourse']);
+    route::post('/createcourse', [CourseController::class, 'postcreateCourse'])->name('course.store');
     route::get('/editcourse/{id}', [CourseController::class, 'getEditCourse']);
-    route::post('/editcourse/{id}', [CourseController::class, 'editCourse']);
-    route::get('/deletecourse/{id}', [CourseController::class, 'deleteCourse']);
+    route::post('/editcourse/{id}', [CourseController::class, 'editCourse'])->name('course.update');
+    route::get('/deletecourse/{id}', [CourseController::class, 'deleteCourse'])->name('course.delete');
 
     //class
     route::get('course/{id}/class', [ClassController::class, 'getClass']);
@@ -100,20 +101,20 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     // });
 
     //unit
-    route::get('/course/{id}/unit', [UnitController::class, 'getUnit']);
-    route::get('/course/{course_id}/createunit', [UnitController::class, 'getcreateUnit']);
-    route::post('/course/{course_id}/createunit', [UnitController::class, 'postcreateUnit']);
-    route::get('/course/{course_id}/unit/{id}/edit', [UnitController::class, 'getEditUnit']);
-    route::post('/course/{course_id}/unit/{id}/edit', [UnitController::class, 'posteditUnit']);
-    route::get('/course/{course_id}/unit/{id}/delete', [UnitController::class, 'deleteUnit']);
+    route::get('/course/{course_id}/unit', [UnitController::class, 'getUnit'])->name('unit.main');
+    route::get('/course/{course_id}/unit/{id}', [UnitController::class, 'showUnit'])->name('unit.show');
+    route::post('/course/{course_id}/createunit', [UnitController::class, 'postcreateUnit'])->name('unit.store');
+    route::post('/course/{course_id}/unit/edit/{id}', [UnitController::class, 'posteditUnit'])->name('unit.update');
+    route::get('/course/{course_id}/unit/delete/{id}', [UnitController::class, 'deleteUnit'])->name('unit.delete');
 
     //slide
-    route::get('course/{id}/slide', [SlideController::class, 'getSlide']);
-    route::get('course/{course_id}/createslide', [SlideController::class, 'getcreateSlide']);
-    route::post('course/{course_id}/createslide', [SlideController::class, 'postcreateSlide']);
-    route::get('course/{course_id}/editslide/{id}', [SlideController::class, 'getEditSlide']);
-    route::post('course/{course_id}/editslide/{id}', [SlideController::class, 'editSlide']);
-    route::get('course/{course_id}/deleteslide/{id}', [SlideController::class, 'deleteSlide']);
+    route::get('course/{course_id}/slide', [SlideController::class, 'getSlide'])->name('slide.main');
+    route::get('course/{course_id}/slide/{id}', [SlideController::class, 'showSlide'])->name('slide.show');
+    route::get('course/{course_id}/createslide', [SlideController::class, 'getcreateSlide'])->name('slide.create');
+    route::post('course/{course_id}/createslide', [SlideController::class, 'postcreateSlide'])->name('slide.store');
+    route::get('course/{course_id}/editslide/{id}', [SlideController::class, 'getEditSlide'])->name('slide.edit');
+    route::post('course/{course_id}/editslide/{id}', [SlideController::class, 'editSlide'])->name('slide.update');
+    route::get('course/{course_id}/deleteslide/{id}', [SlideController::class, 'deleteSlide'])->name('slide.delete');
     
 
     //test
@@ -163,26 +164,18 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
 
 
     //homework
-    route::get('course/{id}/homework', [HomeworkController::class, 'getHomework'])->name('homework.main');
-    route::get('course/{course_id}/createhomework', [HomeworkController::class, 'getcreateHomework'])->name('homework.create');
-    route::post('course/{course_id}/createhomework', [HomeworkController::class, 'postcreateHomework'])->name('homework.postcreate');
-    route::get('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'getEditHomework'])->name('homework.edit');
-    route::post('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'editHomework'])->name('homework.postedit');
+    route::get('course/{course_id}/homework', [HomeworkController::class, 'getHomework'])->name('homework.main');
+    route::get('course/{course_id}/homework/{id}', [HomeworkController::class, 'showHomework'])->name('homework.show');
+    route::post('course/{course_id}/createhomework', [HomeworkController::class, 'postcreateHomework'])->name('homework.store');
+    route::post('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'posteditHomework'])->name('homework.update');
     route::get('course/{course_id}/deletehomework/{id}', [HomeworkController::class, 'deleteHomework'])->name('homework.delete');
     
     //quiz
-    Route::get('course/{id}/quiz', [QuizController::class,'index']);
-    Route::get('course/{course_id}/quiz/{id}/show', [QuizController::class,'show']);
-    Route::get('course/{course_id}/createquiz', [QuizController::class,'create']);
-    Route::post('course/{course_id}/createquiz', [QuizController::class,'store']);
-    Route::delete('course/{course_id}/{quiz}', [QuizController::class,'destroy']);
-    // //quiz
-    // route::get('/quiz', [TestController::class, 'getTest']);
-    // route::get('/createquiz', [TestController::class, 'getcreateTest']);
-    // route::post('/createquiz', [TestController::class, 'postcreateTest']);
-    // route::get('/detal/{quiz}', [TestController::class, 'detalTest']);
-    // route::post('/result/{quiz}', [TestController::class, 'resultTest']);
-
+    Route::get('course/{course_id}/quiz', [QuizController::class,'index'])->name('quiz.main');
+    Route::get('course/{course_id}/quiz/{id}', [QuizController::class,'show'])->name('quiz.show');
+    Route::get('course/{course_id}/quiz/{id}/show', [QuizController::class,'detail'])->name('quiz.detail');
+    Route::post('course/{course_id}/createquiz', [QuizController::class,'store'])->name('quiz.store');
+    Route::delete('course/{course_id}/quiz/{id}', [QuizController::class,'destroy'])->name('quiz.destroy');
     // //code
     // route::get('/code', [CodeController::class, 'getCode']);
     // route::get('/createcode', [CodeController::class, 'getcreateCode']);

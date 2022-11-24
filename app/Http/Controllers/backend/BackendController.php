@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Course;
+use Illuminate\Support\Facades\Route;
 class BackendController extends Controller
 {
     public function index()
     {
-        Auth::user();
-        // dd(Auth::user()->name);
         return view('pages.backend.main');
     }
     public function getCourse()

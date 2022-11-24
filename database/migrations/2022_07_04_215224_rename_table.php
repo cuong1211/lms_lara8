@@ -23,6 +23,6 @@ class RenameTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::rename('answers', 'answer');
     }
 }

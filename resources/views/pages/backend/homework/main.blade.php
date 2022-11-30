@@ -1,5 +1,5 @@
 @push('namepage')
-    Quản lý khoá học
+    Quản lý Bài tập về nhà
 @endpush
 @extends('layout.backend.index')
 @section('title')
@@ -24,7 +24,7 @@
                         </div>
                     </form>
                 </div>
-                {{-- <h4 class="page-title">Khoá học: {{ $course->name }}</h4> --}}
+                <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
             </div>
         </div>
     </div>
@@ -39,27 +39,6 @@
                         <th class="text-center">ACTION</th>
                     </tr>
                 </thead>
-                {{-- <tbody>
-                    @php
-                        $count = 1;
-                        
-                    @endphp
-                    @foreach ($homework as $item)
-                        <tr>
-                            <td class="text-center">{{ $count }}</td>
-                            <td class="text-center">{{ $item->title }}</td>
-                            <td class="table-action text-center">
-                                <a href="{{route('homework.edit',['course_id'=>$course_id,'id'=>$item->id])}}" class="action-icon">
-                                    <i class="mdi mdi-pencil"></i>
-                                </a>
-                                <a href="{{route('homework.delete',['course_id'=>$course_id,'id'=>$item->id])}}" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    @php
-                        $count++;
-                    @endphp
-                </tbody> --}}
             </table>
         @include('pages.backend.homework.modal')
         </div>

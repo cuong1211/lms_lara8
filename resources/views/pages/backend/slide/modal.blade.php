@@ -4,19 +4,19 @@
             <form class="form" id="modal_add" >
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myCenterModalLabel">Thêm khoá học</h4>
+                    <h4 class="modal-title" id="myCenterModalLabel"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="id" value="">
                     <input type="hidden" name="course_id" value="">
                     <div class="form-group">
-                        <label for="simpleinput">TÊN BÀI TẬP:</label>
+                        <label for="simpleinput">TÊN:</label>
                         <input type="text" id="simpleinput" class="form-control" name="title">
                     </div>
-                    <div class="form-group col-sm-6">
-                        <label for="uname">NỘI DUNG:</label>
-                        <textarea name="content" id="text-content"></textarea>
+                    <div class="form-group">
+                        <label for="example-date">ĐƯỜNG DẪN:</label>
+                        <input class="form-control" id="simpleinput" type="text" name="link" placeholder="example: https://docs.google.com/presentation/d/xxxxxxxx">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -30,17 +30,14 @@
 <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="form" >
+            <form class="form" id="content_slide">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myCenterModalLabel"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <div class="content-modal"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-light" data-dismiss="modal">Reset</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <iframe src="" frameborder="0" width="780" height="400"
+                        allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" id="slide-content"></iframe>
                 </div>
             </form>
         </div>

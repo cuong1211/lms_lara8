@@ -18,7 +18,7 @@ class HomeworkController extends Controller
         switch ($id) {
             case 'get-list':
                 $homework = Homework::query()->where('course_id',$course_id);
-                return Datatables::of($homework)->make(true);
+                return Datatables::of($homework)->escapeColumns(2)->make(true);
                 break;
             default:
                 break;
@@ -53,9 +53,7 @@ class HomeworkController extends Controller
         $homework->update([
             'course_id'=>$course_id,
             'title'=>$request->title,
-            'description'=>$request->description,
-            'course_id'=>$request->course_id,
-            'unit_id'=>$request->unit_id,
+            'content'=>$request->content
         ]);
         // dd($homework);
         if($homework){

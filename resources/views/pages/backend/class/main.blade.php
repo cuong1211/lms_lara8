@@ -7,31 +7,28 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . '/createclass' }}"
-                                    class="btn btn-dark"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
                             </div>
                         </div>
                     </form>
 
                 </div>
-
-                <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
-                <h4 class="page-title">DANH SÁCH LỚP</h4>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-striped table-centered mb-0">
+            <table id="datatable" class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
                         <th>STT</th>
                         <th>LỚP</th>
                         <th>Giáo viên</th>
+                        <th>Chi tiết lớp</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @php
                         $count = 1;
                         
@@ -58,8 +55,16 @@
                             $count++;
                         @endphp
                     @endforeach
-                </tbody>
+                </tbody> --}}
             </table>
         </div>
+        @include('pages.backend.class.modal')
     </div>
 @endsection
+@push('jscustom')
+    <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="assets/js/vendor/responsive.bootstrap4.min.js"></script>
+    @include('pages.backend.class.js')
+@endpush

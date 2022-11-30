@@ -1,4 +1,16 @@
+@push('namepage')
+    Quản lý giáo viên
+@endpush
 @extends('layout.backend.index')
+@section('title')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Danh sách giáo viên</h4>
+            </div>
+        </div>
+    </div>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -7,8 +19,8 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/teacher/create') }}" class="btn btn-dark"><i
-                                        class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i>
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -18,24 +30,26 @@
                         </span>
                     </button>
                 </div>
-                <h4 class="page-title">GIÁO VIÊN</h4>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-striped table-centered mb-0">
+            <table id="datatable" class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
                         <th>STT</th>
+                        <th>AVATAR</th>
                         <th>TÊN</th>
                         <th>EMAIL</th>
+                        <th>SĐT</th>
+                        <th>ĐỊA CHỈ</th>
+                        <th>NGÀY SINH</th>
                         <th>ZOOM</th>
-                        <th>TRẠNG THÁI</th>
                         <th>ACTION</th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @php
                         $count = 1;
                         
@@ -52,13 +66,6 @@
                                     {{ $item->zoom->topic }}
                                 @endif
                             </td>
-                            {{-- <td>
-                                @if ($item->status == 1)
-                                    <span class="badge badge-success">Hoạt động</span>
-                                @else
-                                    <span class="badge badge-danger">Không hoạt động</span>
-                                @endif
-                            </td> --}}
                             <td class="table-action">
                                 <a href="{{ url('admin/teacher' . '/' . $item->id . '/edit') }}" class="action-icon"> <i
                                         class="mdi mdi-pencil"></i></a>
@@ -70,32 +77,17 @@
                             $count++;
                         @endphp
                     @endforeach
-                </tbody>
+                </tbody> --}}
             </table>
         </div>
-    </div>
-    {{-- modal input --}}
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Nhập file csv</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ url('/admin/teacher/import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <input type="file" name="file">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Tải lên</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        @include('pages.backend.teacher.modal')
     </div>
 @endsection
+@push('jscustom')
+    <!-- Datatables js -->
+    <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="assets/js/vendor/responsive.bootstrap4.min.js"></script>
+    @include('pages.backend.teacher.js')
+@endpush

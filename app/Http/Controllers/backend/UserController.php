@@ -9,51 +9,100 @@ use App\Models\User;
 use App\Models\Role;
 use App\Imports\StudentsImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\Datatables\Datatables;
 
 class UserController extends Controller
 {
-    public function getUser(){
-        $user=User::where('role_id',3)->with('role')->get();
-        $role = Role::query();    
-        return view('pages.backend.user.main',compact('user','role'));
+    public function getUser(){  
+        return view('pages.backend.user.main');
     }
-    public function create(){
-        $role=Role::query()->get();
-        return view('pages.backend.user.create',compact('role'));
+    public function showUser($id){
+        switch ($id) {
+            case 'get-list':
+                $user = User::query()->where('role_id',3);
+                return Datatables::of($user)->make(true);
+                break;
+            default:
+                break;
+        }
     }
     public function store(Request $request){
-        $user=new User();
-        $user->name=$request->name;
-        $user->email=$request->email;
-        $user->password=bcrypt($request->password);
-        $user->role_id=3;
-        $user->save();
-        Session::flash('success','User created successfully');
-        return redirect()->route('user.main');
-    }
-    public function edit($id){
-        $user=User::query()->find($id);
-        $role=Role::query()->get();
-        return view('pages.backend.user.edit',compact('user','role'));
+        $user = User::create([
+            'role_id'=>3,
+            'name'=>$request->name,
+            'password'=>bcrypt($request->password),
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'birthday' => $request->birthday
+        ]);
+        if($user){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
     public function update(Request $request,$id){
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+        $user = User::find($id);
+        $user->update([
+            'role_id'=>3,
+            'name'=>$request->name,
+            'password'=>bcrypt($request->password),
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'birthday' => $request->birthday
         ]);
-        $user=User::query()->find($id);
-        $user->name=$request->name;
-        $user->email=$request->email;
-        $user->password=bcrypt($request->password);
-        $user->save();
-        Session::flash('success','User updated successfully');
-        return redirect()->route('user.main');
+        if($user){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Sửa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Sửa thất bại'
+                ]
+            );
+        };
     }
     public function destroy($id){
-        $user=User::query()->find($id);
+        $user=User::find($id);
         $user->delete();
-        Session::flash('success','User deleted successfully');
-        return redirect()->route('user.main');
+        if($user){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xoá thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xoá thất bại'
+                ]
+            );
+        };
     }
     public function Import(request $request)
     {   

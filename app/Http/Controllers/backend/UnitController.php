@@ -59,12 +59,12 @@ class UnitController extends Controller
         };
     }
     public function posteditUnit(request $request,$course_id,$id){
-        $unit = Unit::query()->find($id);
+        $unit = Unit::find($id);
         $unit->update([
             'title'=>$request->title,
             'description'=>$request->description,
             'content'=>$request->content,
-            'course_id'=>$request->course_id,
+            'course_id'=>$course_id,
             'slide_id'=>$request->slide_id,
             'quizzes_id'=>$request->quizzes_id,
             'homework_id'=>$request->homework_id,

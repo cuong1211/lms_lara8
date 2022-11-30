@@ -7,32 +7,48 @@ use Illuminate\Http\Request;
 use App\models\Course;
 use App\models\Unit;
 use App\models\Slide;
+use Yajra\Datatables\Datatables;
 
 class SlideController extends Controller
 {
-    public function getSlide($id){
-        $slide = Slide::query()->where('course_id',$id)->get();
-        $course= Course::find($id);
-        return view('pages.backend.slide.main',compact('slide','course'));
+    public function getSlide($course_id){
+        
+        return view('pages.backend.slide.main',compact('course_id'));
     }
-    public function getcreateSlide($course_id){
-        $course = Course::find($course_id);
-        return view('pages.backend.slide.create',compact('course'));
+    public function showSlide($course_id,$id){
+        switch ($id) {
+            case 'get-list':
+                $slide = Slide::query()->where('course_id',$course_id);
+                return Datatables::of($slide)->make(true);
+                break;
+            default:
+                break;
+        }
     }
     public function postcreateSlide(request $request, $course_id){
         $link_embed= str_replace('pub','embed',$request->link);
         $slide = Slide::create([
             'title'=>$request->title,
-            'link'=>$link_embed,
-            'course_id'=>$request->course_id,
+            'link'=>$link_embed,   
+            'course_id'=>$course_id,
         ]);
-        return redirect(('/admin/course').'/'.$course_id.'/slide');
-    }
-    public function getEditSlide($course_id,$id){
-        $slide = Slide::query()->find($id);
-        $course = Course::find($course_id);
-        $unit = Unit::query()->get();
-        return view('pages.backend.slide.edit',compact('slide','course','unit'));
+        if($slide){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
     public function posteditSlide(request $request,$course_id,$id){
         $slide = Slide::query()->find($id);
@@ -42,12 +58,44 @@ class SlideController extends Controller
             'course_id'=>$request->course_id,
             'unit_id'=>$request->unit_id,
         ]);
-        return redirect(('/admin/course').'/'.$course_id.'/slide');
+        if($slide){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Sửa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Sửa thất bại'
+                ]
+            );
+        };
     }
     public function deleteSlide($course_id,$id){
         $slide = Slide::query()->find($id);
         $slide->delete();
-        return redirect(('/admin/course').'/'.$course_id.'/slide');
+        if($slide){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xoá thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xoá thất bại'
+                ]
+            );
+        };
     }
 
 }

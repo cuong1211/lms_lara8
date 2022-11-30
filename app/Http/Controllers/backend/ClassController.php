@@ -10,24 +10,26 @@ use App\Models\User;
 use App\Models\Classes;
 use App\Models\point;
 use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 
 class ClassController extends Controller
 {
-    public function getClass($id)
+    public function getClass($course_id)
     {
-
-        $classes = Classes::query()->where('course_id', $id)->with('user')->get();
-        $course = Course::find($id);
-        return view('pages.backend.class.main', compact('classes', 'course'));
+        $teacher = User::where('role_id', 2)->get();
+        return view('pages.backend.class.main', compact('course_id', 'teacher'));
     }
-    public function getcreateClass($course_id)
-    {
-        $course = Course::find($course_id);
-        $teacher = User::query()->where('role_id', 2)->get();
-        $student = User::query()->where('role_id', 3)->get();
-        return view('pages.backend.class.create', compact('teacher', 'student', 'course'));
-    }
+    public function showClass($course_id,$id){
+        switch ($id) {
+            case 'get-list':
+                $class = Classes::query()->where('course_id',$course_id)->with('user');
+                return Datatables::of($class)->make(true);
+                break;
+            default:
+                break;
+        }
+    } 
     public function createClass(request $request, $course_id)
     {
         $class = Classes::create([
@@ -35,7 +37,48 @@ class ClassController extends Controller
             'course_id' => $request->course_id,
             'user_id' => $request->user_id,
         ]);
-        return redirect(('/admin/course') . '/' . $course_id . '/class');
+        if ($class) {
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
+    }
+    public function editClass(request $request, $course_id, $id)
+    {
+        $class = Classes::find($id);
+        $class->course_id = $course_id;
+        $class->name = $request->name;
+        $class->user_id = $request->user_id;
+        $class->save();
+        if ($class) {
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Sửa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Sửa thất bại'
+                ]
+            );
+        };
     }
     public function getDetailClass($course_id, $id)
     {

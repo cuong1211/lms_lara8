@@ -63,22 +63,19 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('/pre_course', [BackendController::class, 'getCourse']);
 
     //course    
-    route::get('/course', [CourseController::class, 'getCourse']);
+    route::get('/course', [CourseController::class, 'getCourse'])->name('course.main');
     route::get('/course/{id}', [CourseController::class, 'showCourse'])->name('course.show');
-    route::get('/createcourse', [CourseController::class, 'getcreateCourse']);
     route::post('/createcourse', [CourseController::class, 'postcreateCourse'])->name('course.store');
-    route::get('/editcourse/{id}', [CourseController::class, 'getEditCourse']);
     route::post('/editcourse/{id}', [CourseController::class, 'editCourse'])->name('course.update');
     route::get('/deletecourse/{id}', [CourseController::class, 'deleteCourse'])->name('course.delete');
 
     //class
-    route::get('course/{id}/class', [ClassController::class, 'getClass']);
-    route::get('course/{course_id}/createclass', [ClassController::class, 'getcreateClass']);
-    route::post('course/{course_id}/createclass', [ClassController::class, 'createClass']);
-    route::get('course/{course_id}/editclass/{id}', [ClassController::class, 'getEditClass']);
-    route::post('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass']);
-    route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass']);
-    route::get('course/{course_id}/class/{id}', [ClassController::class, 'getDetailClass'])->name('class.detail');
+    route::get('course/{course_id}/class', [ClassController::class, 'getClass'])->name('class.main');
+    route::get('course/{course_id}/class/{id}', [ClassController::class, 'showClass'])->name('class.show');
+    route::post('course/{course_id}/createclass', [ClassController::class, 'createClass'])->name('class.store');
+    route::put('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass'])->name('class.update');
+    route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass'])->name('class.delete');
+    route::get('course/{course_id}/class/detail/{id}', [ClassController::class, 'getDetailClass'])->name('class.detail');
     route::get('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'getAddStudent']);
     route::post('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
     
@@ -104,16 +101,14 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('/course/{course_id}/unit', [UnitController::class, 'getUnit'])->name('unit.main');
     route::get('/course/{course_id}/unit/{id}', [UnitController::class, 'showUnit'])->name('unit.show');
     route::post('/course/{course_id}/createunit', [UnitController::class, 'postcreateUnit'])->name('unit.store');
-    route::post('/course/{course_id}/unit/edit/{id}', [UnitController::class, 'posteditUnit'])->name('unit.update');
+    route::put('/course/{course_id}/unit/edit/{id}', [UnitController::class, 'posteditUnit'])->name('unit.update');
     route::get('/course/{course_id}/unit/delete/{id}', [UnitController::class, 'deleteUnit'])->name('unit.delete');
 
     //slide
     route::get('course/{course_id}/slide', [SlideController::class, 'getSlide'])->name('slide.main');
     route::get('course/{course_id}/slide/{id}', [SlideController::class, 'showSlide'])->name('slide.show');
-    route::get('course/{course_id}/createslide', [SlideController::class, 'getcreateSlide'])->name('slide.create');
     route::post('course/{course_id}/createslide', [SlideController::class, 'postcreateSlide'])->name('slide.store');
-    route::get('course/{course_id}/editslide/{id}', [SlideController::class, 'getEditSlide'])->name('slide.edit');
-    route::post('course/{course_id}/editslide/{id}', [SlideController::class, 'editSlide'])->name('slide.update');
+    route::post('course/{course_id}/editslide/{id}', [SlideController::class, 'posteditSlide'])->name('slide.update');
     route::get('course/{course_id}/deleteslide/{id}', [SlideController::class, 'deleteSlide'])->name('slide.delete');
     
 
@@ -122,21 +117,19 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
 
     //user
     route::get('/user', [UserController::class, 'getUser'])->name('user.main');
-    route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    route::get('/user/{id}', [UserController::class, 'showUser'])->name('user.show');
     route::post('/user/create', [UserController::class, 'store'])->name('user.store');
-    route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    route::post('/user/{id}/edit', [UserController::class, 'update'])->name('user.update');
-    route::get('/user/{id}/delete', [UserController::class, 'delete'])->name('user.delete');
-    route::post('user/import', [UserController::class, 'Import']);
+    route::put('/user/edit/{id}', [UserController::class, 'update'])->name('user.update');
+    route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    route::post('user/import', [UserController::class, 'Import'])->name('user.import');
 
     //teacher
     route::get('/teacher', [TeacherController::class, 'getTeacher'])->name('teacher.main');
-    route::get('/teacher/create', [TeacherController::class, 'create']);
+    route::get('/teacher/{id}', [TeacherController::class, 'showTeacher'])->name('teacher.show');
     route::post('/teacher/create', [TeacherController::class, 'store'])->name('teacher.store');
-    route::get('/teacher/{id}/edit', [TeacherController::class, 'edit']);
-    route::post('/teacher/{id}/edit', [TeacherController::class, 'update']);
-    route::get('/teacher/{id}/delete', [TeacherController::class, 'destroy']);
-    route::post('/teacher/import', [TeacherController::class, 'Import']);
+    route::put('/teacher/edit/{id}', [TeacherController::class, 'update'])->name('teacher.update');
+    route::get('/teacher/delete/{id}', [TeacherController::class, 'destroy'])->name('teacher.delete');
+    route::post('/teacher/import', [TeacherController::class, 'Import'])->name('teacher.import');
 
     //role
     route::get('/role', [RoleController::class, 'getRole'])->name('role.main');
@@ -167,7 +160,7 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/homework', [HomeworkController::class, 'getHomework'])->name('homework.main');
     route::get('course/{course_id}/homework/{id}', [HomeworkController::class, 'showHomework'])->name('homework.show');
     route::post('course/{course_id}/createhomework', [HomeworkController::class, 'postcreateHomework'])->name('homework.store');
-    route::post('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'posteditHomework'])->name('homework.update');
+    route::put('course/{course_id}/edithomework/{id}', [HomeworkController::class, 'posteditHomework'])->name('homework.update');
     route::get('course/{course_id}/deletehomework/{id}', [HomeworkController::class, 'deleteHomework'])->name('homework.delete');
     
     //quiz

@@ -15,10 +15,13 @@ class TeachersImport implements ToArray,WithHeadingRow
         foreach ($array as $teacher) {
 
             $user = User::create([
-                'avatar' => $teacher['avater'],
+                'avatar' => $teacher['avatar'],
                 'name' => $teacher['name'],
                 'email' => $teacher['email'],
                 'password' => bcrypt('123456'),
+                'phone'=>$teacher['phone'],
+                'address'=>$teacher['address'],
+                'birthday' => $teacher['birthday'],
                 'role_id' => 2,
                 'status' => 0,
             ]);

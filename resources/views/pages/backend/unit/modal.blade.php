@@ -1,7 +1,7 @@
 <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="form" id="modal_add" enctype="multipart/form-data">
+            <form class="form" id="modal_add" >
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title" id="myCenterModalLabel">Thêm khoá học</h4>
@@ -64,6 +64,21 @@
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-light" data-dismiss="modal">Reset</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form" id="form-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myCenterModalLabel"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-modal"></div>
                 </div>
             </form>
         </div>

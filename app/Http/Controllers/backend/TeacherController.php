@@ -10,26 +10,32 @@ use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 use App\Imports\TeachersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\Datatables\Datatables;
 
 class TeacherController extends Controller
 {
     public function getTeacher(){
-        $teacher=User::where('role_id',2)->with('zoom')->get();
-        return view('pages.backend.teacher.main',compact('teacher'));
-    }
-    public function create(){
         $zoom = Zoom::query()->get();
-        return view('pages.backend.teacher.create',compact('zoom'));
+        return view('pages.backend.teacher.main',compact('zoom'));
+    }
+    public function showTeacher($id){
+        switch ($id) {
+            case 'get-list':
+                $teacher = User::query()->where('role_id',2);
+                return Datatables::of($teacher)->make(true);
+                break;
+            default:
+                break;
+        }
     }
     public function store(Request $request){
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-        ]);
         $teacher=new User();
         $teacher->name=$request->name;
         $teacher->email=$request->email;
         $teacher->password=bcrypt($request->password);
+        $teacher->birthday=$request->birthday;
+        $teacher->phone=$request->phone;
+        $teacher->address=$request->address;
         $teacher->role_id=2;
         $teacher->zoom_id=$request->zoom_id;
         if($request->hasFile('avatar')){
@@ -39,32 +45,73 @@ class TeacherController extends Controller
             $teacher->avatar = $name;
         }
         $teacher->save();
-        Session::flash('success','Teacher created successfully');
-        return redirect()->route('teacher.main');
-    }
-    public function edit($id){
-        $teacher=User::query()->find($id);
-        $zoom = Zoom::query()->get();
-        return view('pages.backend.teacher.edit',compact('teacher','zoom'));
+        if($teacher){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
     public function update(Request $request,$id){
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+        $teacher=User::find($id);
+        $teacher->update([
+            'role_id'=>2,
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'birthday' => $request->birthday,
+            'zoom_id'=>$request->zoom_id
         ]);
-        $teacher=User::query()->find($id);
-        $teacher->name=$request->name;
-        $teacher->email=$request->email;
-        $teacher->zoom_id=$request->zoom_id;
-        $teacher->save();
-        Session::flash('success','Teacher updated successfully');
-        return redirect()->route('teacher.main');
+        if($teacher){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Sửa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Sửa thất bại'
+                ]
+            );
+        };
     }
     public function destroy($id){
-        $teacher=User::query()->find($id);
+        $teacher=User::find($id);
         $teacher->delete();
-        Session::flash('success','Teacher deleted successfully');
-        return redirect()->route('teacher.main');
+        if($teacher){
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xoá thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xoá thất bại'
+                ]
+            );
+        };
     }
     public function Import(request $request)
     {   

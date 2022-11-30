@@ -10,8 +10,7 @@
             url: "{{ route('homework.show', ['course_id' => "${course_id}", 'id' => 'get-list']) }}",
             type: 'GET',
         },
-        columns: [
-            {
+        columns: [{
                 data: null,
                 orderable: false,
                 searchable: false,
@@ -34,9 +33,10 @@
                 data: 'content',
                 className: 'text-center',
                 render: function(data, type, row, meta) {
-                    return `<button type="button" class="btn btn-primary"><span>Xem</span> </button>`;
+                    return '<button type="button" data-data=\'' + JSON.stringify(row) +
+                        '\' class="btn btn-primary btn-show" data-toggle="modal" data-target="#contentModal" data-whatever="@mdo">Xem nội dung</button>';
                 }
-            }, 
+            },
             {
                 data: null,
                 className: 'text-center',
@@ -69,11 +69,18 @@
         e.preventDefault();
         form_reset();
         let modal = $('#modal_add');
-        modal.find('.modal-title').text('Thêm khoá học');
+        modal.find('.modal-title').text('Thêm bài tập về nhà');
         modal.find('input[name=id]').val('');
         modal.find('input[name=course_id]').val({{ $course_id }});
         $('#centermodal').modal('show');
         $('.note-editable').empty('');
+    });
+    $(document).on('click', '.btn-show', function(e) {
+        console.log('show')
+        $('#contentModal').modal('show');
+        let data = $(this).data('data');
+        // console.log(data);
+        $('.content-modal').html(data.content).text();
     });
     $(document).on('click', '.btn-edit', function(e) {
         e.preventDefault();
@@ -81,24 +88,24 @@
         let data = $(this).data('data');
         // console.log(data);
         let modal = $('#modal_add');
-        modal.find('.modal-title').text('Sửa khoá học');
+        modal.find('.modal-title').text('Sửa bài tập về nhà');
         modal.find('input[name=id]').val(data.id);
         modal.find('input[name=course_id]').val(data.course_id);
         modal.find('input[name=title]').val(data.title);
-        $('.note-editable').text(data.content);
+        var content = $('.note-editable').html(data.content).text();
+        modal.find('textarea[name=content]').val(content);
         // $('.alert-danger').hide();
     });
     $('#modal_add').on('submit', function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
         let data = $(this).serialize(),
             type = 'POST',
-            url = "{{ route('homework.store',['course_id'=>"${course_id}"]) }}",
+            url = "{{ route('homework.store', ['course_id' => "${course_id}"]) }}",
             id = $('form#modal_add input[name=id]').val();
-        if (parseInt(id)) { 
+        if (parseInt(id)) {
             console.log('edit');
-            type = 'POST';
-            url = "{{ route('homework.update',['course_id'=>"${course_id}",'']) }}"+"/"+id;
+            type = 'PUT';
+            url = "{{ route('homework.update', ['course_id' => "${course_id}", '']) }}" + "/" + id;
         }
         $.ajax({
             url: url,
@@ -106,9 +113,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: type,
-            data: formData,
-            contentType: false,
-            processData: false,
+            data: data,
             success: function(data) {
                 // notification(data.type, data.title, data.content);
                 toastr[data.type](data.content, data.title);
@@ -129,7 +134,7 @@
         let id = $(this).data('id');
         console.log($(this).data())
         $.ajax({
-            url: "{{ route('homework.delete',['course_id'=>"${course_id}",'']) }}"+"/"+id,
+            url: "{{ route('homework.delete', ['course_id' => "${course_id}", '']) }}" + "/" + id,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

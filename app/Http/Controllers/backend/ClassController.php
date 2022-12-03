@@ -80,26 +80,38 @@ class ClassController extends Controller
             );
         };
     }
-    public function getDetailClass($course_id, $id)
+    public function getDetailClass($course_id, $class_id)
     {
-        $classdetail = DB::table('class_users')
-            ->select('class_users.*', 'users.name as user_name', 'class.name as class_name')
-            ->join('users', 'class_users.user_id', '=', 'users.id')
-            ->join('class', 'class_users.class_id', '=', 'class.id')
-            // ->join('users', 'class_users.user_id', '=', 'users.id')
-            ->where('class_id', '=', $id)
-            ->simplePaginate(15); 
-        $class = Classes::find($id);
-        $course = Course::find($course_id);
-        return view('pages.backend.class.detail', compact('classdetail', 'course','class'));
+        // $classdetail = DB::table('class_users')
+        //     ->select('class_users.*', 'users.name as user_name', 'class.name as class_name')
+        //     ->join('users', 'class_users.user_id', '=', 'users.id')
+        //     ->join('class', 'class_users.class_id', '=', 'class.id')
+        //     // ->join('users', 'class_users.user_id', '=', 'users.id')
+        //     ->where('class_id', '=', $id)
+        //     ->simplePaginate(15); 
+        // $class = Classes::find($id);
+        // $course = Course::find($course_id);
+        $student = User::where('role_id', 3)->get();
+        return view('pages.backend.class.detail', compact('course_id', 'class_id', 'student'));
     }
-    public function getAddStudent($course_id, $class_id){
-        $student = User::query()->where('role_id', 3)->get();
-        $class = Classes::find($class_id);
-        $course = Course::find($course_id);
-        return view('pages.backend.class.addstudent', compact('student', 'class','course'));
-
+    public function showDetailClass($course_id, $class_id)
+    {
+        switch ($class_id){
+            case 'get-list':
+                // $classdetail = DB::table('class_users')
+                //     ->select('class_users.*', 'users.name as user_name', 'class.name as class_name')
+                //     ->join('users', 'class_users.user_id', '=', 'users.id')
+                //     ->join('class', 'class_users.class_id', '=', 'class.id')
+                //     // ->join('users', 'class_users.user_id', '=', 'users.id')
+                //     ->where('class_id', '=', $class_id);
+                $classdetail = class_user::query()->where('class_id',$class_id)->with('user');
+                return Datatables::of($classdetail)->make(true);
+                break;
+            default:
+                break;
+        }
     }
+    
     public function postAddStudent(request $request, $course_id, $class_id){
        //dd($request->ids);
         $ids = $request->ids;

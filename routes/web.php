@@ -71,11 +71,12 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
 
     //class
     route::get('course/{course_id}/class', [ClassController::class, 'getClass'])->name('class.main');
-    route::get('course/{course_id}/class/{id}', [ClassController::class, 'showClass'])->name('class.show');
+    route::get('course/{course_id}/class/{class_id}', [ClassController::class, 'showClass'])->name('class.show');
     route::post('course/{course_id}/createclass', [ClassController::class, 'createClass'])->name('class.store');
     route::put('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass'])->name('class.update');
     route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass'])->name('class.delete');
-    route::get('course/{course_id}/class/detail/{id}', [ClassController::class, 'getDetailClass'])->name('class.detail');
+    route::get('course/{course_id}/class/{class_id}/detail', [ClassController::class, 'getDetailClass'])->name('class.detail');
+    route::get('course/{course_id}/class/{class_id}/show', [ClassController::class, 'showDetailClass'])->name('class.detail.show');
     route::get('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'getAddStudent']);
     route::post('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
     

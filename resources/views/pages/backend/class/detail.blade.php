@@ -7,27 +7,24 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="{{ url('/admin/course') . '/' . $course->id . ('/class').'/'.$class->id.'/addstudent'}}"
-                                    class="btn btn-dark">
-                                    <i class="mdi mdi-pencil-plus-outline">THÊM HỌC SINH</i></a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM HỌC SINH</i></a>
                             </div>
                         </div>
                     </form>
-                    
-                    <a href="{{route('point.main',['course_id'=>$course->id,'class_id'=>$class->id])}}">
+                    <a href="">
                         <button type="button" class="btn btn-primary">BẢNG ĐIỂM</button>
                     </a>
                     <button type="button" class="btn btn-primary">THỐNG KÊ</button>
                 </div>
 
-                <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
-                <h4 class="page-title">DANH SÁCH LỚP:{{$class->name}}</h4>
+                {{-- <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
+                <h4 class="page-title">DANH SÁCH LỚP:{{$class->name}}</h4> --}}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-striped table-centered mb-0">
+            <table id="datatable" class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -35,7 +32,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @php
                         $count = 1;
                         
@@ -53,14 +50,16 @@
                             $count++;
                         @endphp
                     @endforeach
-                </tbody>
+                </tbody> --}}
             </table>
         </div>
+        @include('pages.backend.class.modaldetail')
     </div>
-    <div class="row">
-        {{ $classdetail->links() }}
-
-    </div>
-
-    
 @endsection
+@push('jscustom')
+    <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="assets/js/vendor/responsive.bootstrap4.min.js"></script>
+    @include('pages.backend.class.jsdetail')
+@endpush

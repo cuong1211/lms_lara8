@@ -6,7 +6,7 @@
             [1, 'desc']
         ],
         ajax: {
-            url: "{{ route('class.show', ['course_id' => "${course_id}", 'class_id' => 'get-list']) }}",
+            url: "{{ route('class.detail.show', ['course_id' => "${course_id}", 'class_id' => 'get-list']) }}",
             type: 'GET'
         },
         columns: [{
@@ -18,31 +18,13 @@
                 }
             },
             {
-
-                data: 'name',
-                className: 'text-center',
-                render: function(data, type, row, meta) {
-                    return data;
-                }
-            },
-            {
                 data: 'user.name',
                 className: 'text-center',
                 render: function(data, type, row, meta) {
                     return data;
                 }
             },
-            {
-                data: null,
-                className: 'text-center',
-                render: function(data, type, row, meta) {
-                    return `<a href="{{ url('/admin/course') . '/' }}${data.course_id}/class/${data.id}/detail">
-                                <button type="button" class="btn btn-primary">
-                                    Chi tiết
-                                </button>
-                            </a>`;
-                }
-            },
+            
             {
                 data: null,
                 className: 'text-center',

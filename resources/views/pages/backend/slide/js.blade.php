@@ -72,7 +72,6 @@
         modal.find('input[name=id]').val('');
         modal.find('input[name=course_id]').val({{ $course_id }});
         $('#centermodal').modal('show');
-        $('.note-editable').empty('');
     });
     $(document).on('click', '.btn-show', function(e) {
         console.log('show')

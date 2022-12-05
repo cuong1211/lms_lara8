@@ -75,8 +75,7 @@
         let modal = $('#modal_add');
         modal.find('.modal-title').text('Thêm khoá học');
         modal.find('input[name=id]').val('');
-        modal.find('input[name=img]').val('');
-        $('#image').attr('src', '');
+        modal.find('input[name=course_id]').val({{ $course_id }});
         $('#centermodal').modal('show');
     });
     $(document).on('click', '.btn-edit', function(e) {
@@ -131,7 +130,7 @@
         let id = $(this).data('id');
         console.log($(this).data())
         $.ajax({
-            url: "{{ route('course.delete', '') }}" + '/' + id,
+            url: "{{ route('class.delete', ['course_id'=> "${course_id}",'']) }}" + '/' + id,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

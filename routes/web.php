@@ -76,9 +76,10 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::put('course/{course_id}/editclass/{id}', [ClassController::class, 'editClass'])->name('class.update');
     route::get('course/{course_id}/deleteclass/{id}', [ClassController::class, 'deleteClass'])->name('class.delete');
     route::get('course/{course_id}/class/{class_id}/detail', [ClassController::class, 'getDetailClass'])->name('class.detail');
-    route::get('course/{course_id}/class/{class_id}/show', [ClassController::class, 'showDetailClass'])->name('class.detail.show');
-    route::get('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'getAddStudent']);
-    route::post('course/{course_id}/class/{id}/addstudent', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
+    route::get('course/{course_id}/class/{class_id}/show/{id}', [ClassController::class, 'showDetailClass'])->name('class.detail.show');
+    route::get('course/{course_id}/class/addstudent/{class_id}/show/{id}', [ClassController::class, 'showaddStudent'])->name('class.addstudent.show');
+    route::post('course/{course_id}/class/addstudent/{class_id}', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
+    route::get('course/{course_id}/class/deletestudent/{class_id}', [ClassController::class, 'postdeleteStudent'])->name('class.deletestudent');
     
     //point
     route::get('course/{course_id}/class/{class_id}/point', [PointController::class, 'getPoint'])->name('point.main');

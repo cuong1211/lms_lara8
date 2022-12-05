@@ -20,6 +20,9 @@ class StudentsImport implements ToArray, WithHeadingRow
                 'name' => $student['name'],
                 'email' => $student['email'],
                 'password' => bcrypt('123456'),
+                'phone'=>$student['phone'],
+                'address'=>$student['address'],
+                'birthday' => $student['birthday'],
                 'role_id' => 3,
                 'status' => 0,
             ]);

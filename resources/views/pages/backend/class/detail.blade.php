@@ -9,9 +9,12 @@
                             <div class="input-group">
                                 <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM HỌC SINH</i></a>
                             </div>
+                            <div class="input-group">
+                                <a href="" class="btn btn-danger" id="btn-delete-all" style="display:none" >XOÁ TẤT CẢ</a>
+                            </div>
                         </div>
                     </form>
-                    <a href="">
+                    <a href="{{route('point.main',['course_id' => $course_id,'class_id'=> $class_id])}}">
                         <button type="button" class="btn btn-primary">BẢNG ĐIỂM</button>
                     </a>
                     <button type="button" class="btn btn-primary">THỐNG KÊ</button>
@@ -27,8 +30,9 @@
             <table id="datatable" class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
-                        <th>STT</th>
+                        <th style="text-align:center;"><input type="checkbox" id="check_all_box" class="btn-checkbox" onclick='selectsall()'></th>
                         <th>Họ Tên</th>
+                        <th>Ngày sinh</th>
                         <th>Action</th>
                     </tr>
                 </thead>

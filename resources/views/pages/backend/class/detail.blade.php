@@ -1,4 +1,16 @@
+@push('namepage')
+    Chi tiết lớp học
+@endpush
 @extends('layout.backend.index')
+@section('title')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Chi tiết lớp học</h4>
+            </div>
+        </div>
+    </div>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -10,18 +22,24 @@
                                 <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM HỌC SINH</i></a>
                             </div>
                             <div class="input-group">
-                                <a href="" class="btn btn-danger" id="btn-delete-all" style="display:none" >XOÁ TẤT CẢ</a>
+                                <a href="" class="btn btn-danger" id="btn-delete-all" style="display:none" ><i class="mdi mdi-delete">XOÁ TẤT CẢ</i></a>
                             </div>
                         </div>
                     </form>
-                    <a href="{{route('point.main',['course_id' => $course_id,'class_id'=> $class_id])}}">
-                        <button type="button" class="btn btn-primary">BẢNG ĐIỂM</button>
-                    </a>
-                    <button type="button" class="btn btn-primary">THỐNG KÊ</button>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <a href="{{route('point.main',['course_id' => $course_id,'class_id'=> $class_id])}}">
+                                    <button type="button" class="btn btn-primary "><i class="mdi mdi-format-list-numbered">BẢNG ĐIỂM</i></button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                {{-- <h4 class="page-title">KHOÁ HỌC: {{ $course->name }}</h4>
-                <h4 class="page-title">DANH SÁCH LỚP:{{$class->name}}</h4> --}}
+            </div>
+            <div class="page-title-left">
+                <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
+                <h4 class="page-title">Danh sách lớp: {{App\models\Classes::find($class_id)->name}}</h4>
             </div>
         </div>
     </div>

@@ -35,7 +35,6 @@ class FrontendController extends Controller
             $class = Classes::query()->where('id',$value['class_id'])->with('course')->get()->toArray(); 
             $class_course[] = $class[0];
         }
-        // dd($class_course);
         return view('pages.frontend.main',compact('class_course','user_id'));
     }
     public function getLesson($user_id,$class_id,$id){

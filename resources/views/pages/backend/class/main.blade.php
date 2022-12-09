@@ -1,4 +1,16 @@
+@push('namepage')
+    Quản lý lóp học
+@endpush
 @extends('layout.backend.index')
+@section('title')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Quản lý lớp học</h4>
+            </div>
+        </div>
+    </div>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -11,9 +23,9 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
+            <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4> 
         </div>
     </div>
     <div class="row">

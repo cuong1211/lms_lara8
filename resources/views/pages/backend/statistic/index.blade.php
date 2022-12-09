@@ -13,30 +13,13 @@
                 </div>
             </div>
             <!-- end page title -->
-
-            <div class="row mb-2">
-                <div class="col-sm-4">
-
-                </div>
-                <div class="col-sm-8">
-                    <div class="text-sm-right">
-                        <div class="btn-group mb-3">
-                            <button type="button" class="btn btn-primary">Tất cả</button>
-                        </div>
-                        <div class="btn-group mb-3 ml-1">
-                            <button type="button" class="btn btn-light">Đang học</button>
-                            <button type="button" class="btn btn-light">Hoàn thành</button>
-                        </div>
-                    </div>
-                </div><!-- end col-->
-            </div>
             <!-- end row-->
             <table class="table table-hover table-centered mb-0">
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Lớp</th>
                         <th>Khoá Học</th>
+                        <th>Lớp</th>
                    
                     </tr>
                 </thead>
@@ -49,8 +32,9 @@
                     
                     <tr>
                         <td>{{$count}}</td>
-                        <td><a href="{{ route('static.view',['id_class' => $item->id ]) }}">{{$item->class_name}}</a></td>
-                        <td><span class="badge badge-primary">{{$item->course_name}}</span></td>
+                        <td>{{$item->course_name}}</td>
+                        <td>{{$item->class_name}}</td>
+                        <td><a href="{{ route('static.view',['id_class' => $item->id ]) }}" class="btn btn-primary">XEM</a></td>
                   
                     </tr>
                     @php

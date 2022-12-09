@@ -35,6 +35,7 @@
             {
                 data: null,
                 className: 'text-center',
+                searchable: false,
                 render: function(data, type, row, meta) {
                     return '<a href="" data-id="' + row.id + '" class="action-icon btn-delete" >' +
                         '<i class="mdi mdi-delete">' +
@@ -87,22 +88,9 @@
         e.preventDefault();
         form_reset();
         let modal = $('#modal_add');
-        modal.find('.modal-title').text('Thêm khoá học');
+        modal.find('.modal-title').text('Thêm học sinh');
         modal.find('input[name=id]').val({{ $class_id }});
         $('#centermodal').modal('show');
-    });
-    $(document).on('click', '.btn-edit', function(e) {
-        e.preventDefault();
-        form_reset();
-        let data = $(this).data('data');
-        console.log(data);
-        let modal = $('#modal_add');
-        modal.find('.modal-title').text('Sửa khoá học');
-        modal.find('input[name=id]').val(data.id);
-        modal.find('input[name=course_id]').val(data.course_id);
-        modal.find('input[name=name]').val(data.name);
-        modal.find('select[name=user_id]').val(data.user_id);
-        $('.alert-danger').hide();
     });
     var dtadd = $("#datatable_user").DataTable({
         serverSide: true,
@@ -212,39 +200,52 @@
     $(document).on('click', '#btn-delete-all', function(e) {
         e.preventDefault();
         var ids = [];
-        if (confirm('Bạn có chắc chắn muốn xóa?')) {
-            $('.checkBoxClassAll:checked').each(function() {
-                ids.push($(this).val());
-            });
-            if (ids.length > 0) {
-                $.ajax({
-                    url: "{{ route('class.deletestudent', ['course_id' => "${course_id}", '']) }}" +
-                        "/" +
-                        ids,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: 'GET',
-                    data: {
-                        ids: ids
-                    },
-                    success: function(data) {
-                        toastr[data.type](data.content, data.title);
-                        if (data.type == 'success') {
-                            dt.ajax.reload(null, false);
-                            dtadd.ajax.reload(null, true);
-                            $('#check_all_box').prop('checked', false);
-                            $('#btn-delete-all').hide();
-                            $('.btn-add').show();
-                        }
-                    },
-                    error: function(data) {
-                        console.log('error');
-                    }
-                });
-            } else {
-                alert('Vui lòng chọn ít nhất 1 bản ghi');
+        Swal.fire({
+            text: "Bạn có muốn xoá các học sinh không?",
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Có, hãy xoá đi!",
+            cancelButtonText: "Không, huỷ",
+            customClass: {
+                confirmButton: "btn fw-bold btn-danger",
+                cancelButton: "btn fw-bold btn-active-light-primary",
             }
-        }
+        }).then(function(result) {
+            if (result.value) {
+                $('.checkBoxClassAll:checked').each(function() {
+                    ids.push($(this).val());
+                });
+                if (ids.length > 0) {
+                    $.ajax({
+                        url: "{{ route('class.deletestudent', ['course_id' => "${course_id}", '']) }}" +
+                            "/" +
+                            ids,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: 'GET',
+                        data: {
+                            ids: ids
+                        },
+                        success: function(data) {
+                            toastr[data.type](data.content, data.title);
+                            if (data.type == 'success') {
+                                dt.ajax.reload(null, false);
+                                dtadd.ajax.reload(null, true);
+                                $('#check_all_box').prop('checked', false);
+                                $('#btn-delete-all').hide();
+                                $('.btn-add').show();
+                            }
+                        },
+                        error: function(data) {
+                            console.log('error');
+                        }
+                    });
+                } else {
+                    alert('Vui lòng chọn ít nhất 1 bản ghi');
+                }
+            }
+        });
     });
 </script>

@@ -83,8 +83,9 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     
     //point
     route::get('course/{course_id}/class/{class_id}/point', [PointController::class, 'getPoint'])->name('point.main');
-    route::get('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'editPoint'])->name('point.edit');
-    route::post('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'postEditPoint'])->name('point.postedit');
+    route::get('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'showPoint'])->name('point.show');
+    // route::get('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'editPoint'])->name('point.edit');
+    route::post('course/{course_id}/class/{class_id}/point/{id}', [PointController::class, 'postEditPoint'])->name('point.update');
 
     //mark score
     route::get('mark',[MarkController::class,'Index'])->name('mark.index');

@@ -35,7 +35,7 @@
                             <td>{{$item->course->name}}</td>
                             <td>{{$item->name}}</td>
                             <td class="table-action">
-                                <a href="{{route('mark.class',['id'=>$item->id])}}" class="action-icon">XEM</a>
+                                <a href="{{route('mark.class',['id'=>$item->id])}}" class="btn btn-primary">XEM</a>
                             </td>
                         </tr>
                         

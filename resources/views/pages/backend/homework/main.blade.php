@@ -24,8 +24,8 @@
                         </div>
                     </form>
                 </div>
-                <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
             </div>
+            <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
         </div>
     </div>
     <div class="row">

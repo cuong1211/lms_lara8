@@ -10,15 +10,6 @@
         </span>
     </a>
 
-    <!-- LOGO -->
-    <a href="{{route('backend.home')}}" class="logo text-center logo-dark">
-        <span class="logo-lg">
-            <img src="assets/images/logo-dark.png" alt="" height="16">
-        </span>
-        <span class="logo-sm">
-            <img src="assets/images/logo_sm_dark.png" alt="" height="16">
-        </span>
-    </a>
 
     <div class="h-100" id="left-side-menu-container" data-simplebar>
 
@@ -26,7 +17,7 @@
         <ul class="metismenu side-nav">
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
+                    <i class="mdi mdi-semantic-web"></i>
                     <span> KHOÁ HỌC </span>
                 </a>
                 <ul class="side-nav-second-level" aria-expanded="false">
@@ -37,7 +28,7 @@
             </li>
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
+                    <i class=" mdi mdi-google-classroom"></i>
                     <span> ZOOM </span>
                 </a>
                 <ul class="side-nav-second-level" aria-expanded="false">
@@ -48,7 +39,7 @@
             </li>
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
+                    <i class="mdi mdi-human-male"></i>
                     <span> NGƯỜI DÙNG </span>
                 </a>
                 <ul class="side-nav-second-level" aria-expanded="false">
@@ -62,12 +53,12 @@
             </li>
             <li class="side-nav-item">
                 <a href="{{route('mark.index')}}" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
+                    <i class="mdi mdi-pencil-box-multiple"></i>
                     <span>CHẤM ĐIỂM</span>
                 </a>
             </li>
                 <a href="{{url('/admin/static')}}" class="side-nav-link">
-                    <i class="uil-home-alt"></i>
+                    <i class="mdi mdi-chart-multiple"></i>
                     <span> THỐNG KÊ </span>
                 </a>
                

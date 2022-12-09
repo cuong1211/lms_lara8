@@ -38,5 +38,6 @@
     <!-- init js -->
     <script src="assets/js/ui/component.fileupload.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('layout.backend.js')
 @endsection

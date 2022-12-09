@@ -35,6 +35,8 @@
             {
                 data: null,
                 className: 'text-center',
+                orderable: false,
+                searchable: false,
                 render: function(data, type, row, meta) {
                     return `<a href="{{ url('/admin/course') . '/' }}${data.course_id}/class/${data.id}/detail">
                                 <button type="button" class="btn btn-primary">
@@ -73,7 +75,7 @@
         e.preventDefault();
         form_reset();
         let modal = $('#modal_add');
-        modal.find('.modal-title').text('Thêm khoá học');
+        modal.find('.modal-title').text('Thêm lớp học');
         modal.find('input[name=id]').val('');
         modal.find('input[name=course_id]').val({{ $course_id }});
         $('#centermodal').modal('show');
@@ -84,7 +86,7 @@
         let data = $(this).data('data');
         console.log(data);
         let modal = $('#modal_add');
-        modal.find('.modal-title').text('Sửa khoá học');
+        modal.find('.modal-title').text('Sửa lớp học');
         modal.find('input[name=id]').val(data.id);
         modal.find('input[name=course_id]').val(data.course_id);
         modal.find('input[name=name]').val(data.name);

@@ -1,33 +1,45 @@
+@push('namepage')
+    Quản lý câu hỏi
+@endpush
 @extends('layout.backend.index')
+@section('title')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Quản lý câu hỏi</h4>
+            </div>
+        </div>
+    </div>
+@endsection
 @section('content')
-    <!-- Bootstrap Boilerplate... -->
-    <div class="panel-body">
+    <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM MỚI</i> </a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM
+                                        MỚI</i> </a>
                             </div>
                         </div>
                     </form>
                 </div>
-                <h4 class="page-title">CÂU HỎI</h4>
             </div>
+            <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
         </div>
-        <!-- Display Validation Errors -->
-        <div class="row">
-            <div class="col-12">
-                <table id="datatable" class="table dt-responsive nowrap w-100">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>CÂU HỎI</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    {{-- <tbody>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table id="datatable" class="table dt-responsive nowrap w-100">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>CÂU HỎI</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                {{-- <tbody>
                         @php
                             $count = 1;
                             
@@ -48,10 +60,10 @@
                             @endphp
                         @endforeach
                     </tbody> --}}
-                </table>
+            </table>
             @include('pages.backend.quiz.modal')
-            </div>
         </div>
+    </div>
     </div>
 
     </div>

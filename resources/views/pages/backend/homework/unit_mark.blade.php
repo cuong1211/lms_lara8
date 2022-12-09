@@ -26,7 +26,7 @@
                             <td>{{ $count }}</td>
                             <td>{{ $item->title}}</td>
                             <td class="table-action">
-                                <a href="{{route('mark.unit',['class_id'=>$id,'id'=>$item->id])}}" class="action-icon">XEM</a>
+                                <a href="{{route('mark.unit',['class_id'=>$id,'id'=>$item->id])}}" class="btn btn-primary">XEM</a>
                             </td>
                         </tr>
                         @php

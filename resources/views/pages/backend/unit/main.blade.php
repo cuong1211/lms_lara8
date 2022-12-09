@@ -19,32 +19,31 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM BÀI HỌC</i></a>
+                                <a href="" class="btn btn-dark btn-add"><i class="mdi mdi-pencil-plus-outline">THÊM
+                                        BÀI HỌC</i></a>
                             </div>
                         </div>
                     </form>
                 </div>
-                <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
-                <div class="page-title-right button-list card-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <a href="{{ route('slide.main',['course_id'=>$course_id]) }}" class="btn btn-primary">SLIDE</a>
-                            </div>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <a href="{{ route('slide.main', ['course_id' => $course_id]) }}" class="btn btn-primary"><i class=" mdi mdi-presentation">SLIDE</i></a>
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <a href="{{route('quiz.main',['course_id'=>$course_id])}}" class="btn btn-info">CÂUHỎI</a>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <a href="{{ route('quiz.main', ['course_id' => $course_id]) }}" class="btn btn-info"><i class=" mdi mdi-frequently-asked-questions">CÂU HỎI</i></a>
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <a href="{{ route('homework.main',['course_id'=>$course_id]) }}" class="btn btn-success">BÀI TẬP VỀ NHÀ</a>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <a href="{{ route('homework.main', ['course_id' => $course_id]) }}" class="btn btn-success"><i class="mdi mdi-home-edit">BÀI TẬP VỀ NHÀ</i></a>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
+            <h4 class="page-title">Khoá học: {{ App\models\Course::find($course_id)->name }}</h4>
         </div>
     </div>
     <div class="row">

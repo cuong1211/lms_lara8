@@ -3,25 +3,17 @@
         serverSide: true,
         processing: true,
         order: [
-            [1, 'asc']
+            [1, 'desc']
         ],
         // ordering: false,
         ajax: {
-            url: "{{ route('unit.show', ['course_id' => "${course_id}", 'id' => 'get-list']) }}",
+            url: "{{ route('point.show', ['course_id' => "${course_id}", 'class_id' => "${class_id}", 'id' => 'get-list']) }}",
             type: 'GET'
         },
         columns: [{
-                data: null,
+                data: 'id',
                 orderable: false,
                 searchable: false,
-                className: 'text-center',
-                render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                }
-            },
-            {
-
-                data: 'title',
                 className: 'text-center',
                 render: function(data, type, row, meta) {
                     return data;
@@ -29,21 +21,19 @@
             },
             {
 
-                data: 'content',
+                data: 'user.name',
                 className: 'text-center',
-                orderable: false,
                 render: function(data, type, row, meta) {
-                    return '<button type="button" data-data=\'' + JSON.stringify(row) +
-                        '\' class="btn btn-primary btn-show" data-toggle="modal" data-target="#contentModal" data-whatever="@mdo">Xem nội dung</button>';
+                    return data;
                 }
-            }, {
+            },
+            {
 
-                data: 'slide.title',
+                data: 'point_1',
                 className: 'text-center',
-                orderable: false,
                 render: function(data, type, row, meta) {
-                    if (data == null) {
-                        return "Không có slide";
+                    if (data == -1) {
+                        return 'Chưa có điểm';
                     } else {
                         return data;
                     }
@@ -51,43 +41,37 @@
             },
             {
 
-                data: 'quiz.quiz',
+                data: 'point_2',
                 className: 'text-center',
-                orderable: false,
                 render: function(data, type, row, meta) {
-                    if (data == null) {
-                        return "Không có câu hỏi";
+                    if (data == -1) {
+                        return 'Chưa có điểm';
                     } else {
                         return data;
-                    }
+                    };
                 }
             },
             {
 
-                data: 'homework.title',
+                data: 'point_3',
                 className: 'text-center',
-                orderable: false,
                 render: function(data, type, row, meta) {
-                    if (data == null) {
-                        return "Không có bài tập";
+                    if (data == -1) {
+                        return 'Chưa có điểm';
                     } else {
                         return data;
-                    }
+                    };
                 }
             },
             {
                 data: null,
                 className: 'text-center',
-                orderable: false,
                 searchable: false,
+                orderable: false,
                 render: function(data, type, row, meta) {
                     return '<a href="" data-data=\'' + JSON.stringify(row) +
                         '\' class="action-icon btn-edit" data-bs-toggle="modal" data-bs-target="#centermodal">' +
                         '<i class="mdi mdi-pencil">' +
-                        '</i>' +
-                        '</a>' +
-                        '<a href="" data-id="' + row.id + '" class="action-icon btn-delete" >' +
-                        '<i class="mdi mdi-delete">' +
                         '</i>' +
                         '</a>';
                 }
@@ -102,54 +86,40 @@
         });
         $("#modal_add").trigger("reset");
     }
-    $(document).on('click', '.btn-show', function(e) {
-        console.log('show')
-        $('#contentModal').modal('show');
-        let data = $(this).data('data');
-        let modal = $('#form-content');
-        modal.find('.modal-title').text(data.title);
-        $('.content-modal').html(data.content).text();
-    });
-    $(document).on('click', '.btn-add', function(e) {
-        console.log('add')
-        e.preventDefault();
-        form_reset();
-        let modal = $('#modal_add');
-        modal.find('.modal-title').text('Thêm bài học');
-        modal.find('input[name=id]').val('');
-        modal.find('input[name=course_id]').val({{ $course_id }});
-        $('.note-editable').empty('');
-        $('#centermodal').modal('show');
-    });
     $(document).on('click', '.btn-edit', function(e) {
         e.preventDefault();
         form_reset();
         let data = $(this).data('data');
-        console.log('edit');
+        console.log(data);
         let modal = $('#modal_add');
-        modal.find('.modal-title').text('Sửa bài học');
+        modal.find('.modal-title').text('Sửa điểm');
         modal.find('input[name=id]').val(data.id);
-        modal.find('input[name=course_id]').val(data.course_id);
-        modal.find('input[name=title]').val(data.title);
-        modal.find('input[name=description]').val(data.description);
-        modal.find('select[name=slide_id]').val(data.slide_id);
-        modal.find('select[name=quizzes_id]').val(data.quizzes_id);
-        modal.find('select[name=homework_id]').val(data.homework_id);
-        var content = $('.note-editable').html(data.content).text();
-        modal.find('textarea[name=content]').val(content);
-        // $('.alert-danger').hide();
+        modal.find('input[name=name]').val(data.name);
+        if (data.point_1 == -1) {
+            modal.find('input[name=point_1]').val('');
+        } else {
+            modal.find('input[name=point_1]').val(data.point_1);
+        }
+        if (data.point_2 == -1) {
+            modal.find('input[name=point_2]').val('');
+        } else {
+            modal.find('input[name=point_2]').val(data.point_2);
+        }
+        if (data.point_3 == -1) {
+            modal.find('input[name=point_3]').val('');
+        } else {
+            modal.find('input[name=point_3]').val(data.point_3);
+        }
+        $('.alert-danger').hide();
     });
     $('#modal_add').on('submit', function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
         let data = $(this).serialize(),
-            type = 'POST',
-            url = "{{ route('unit.store',['course_id'=>"${course_id}"]) }}",
             id = $('form#modal_add input[name=id]').val();
-        if (parseInt(id)) { 
+        if (parseInt(id)) {
             console.log('edit');
-            type = 'PUT';
-            url = "{{ route('unit.update',['course_id'=>"${course_id}",'']) }}"+"/"+id;
+            type = 'POST';
+            url = "{{ route('point.update',['course_id'=>"${course_id}",'class_id'=>"${class_id}",'']) }}"+"/"+id;
         }
         $.ajax({
             url: url,
@@ -178,7 +148,7 @@
         let id = $(this).data('id');
         console.log($(this).data())
         $.ajax({
-            url: "{{ route('unit.delete',['course_id'=>"${course_id}",'']) }}"+"/"+id,
+            url: "{{ route('course.delete', '') }}" + '/' + id,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

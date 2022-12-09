@@ -29,16 +29,6 @@
                     aria-labelledby="topbar-userdrop">
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-account-circle mr-1"></i>
-                        <span>Tài khoản</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-account-edit mr-1"></i>
-                        <span>Cài đặt</span>
-                    </a>
 
                     <!-- item-->
                     <a style="cursor:pointer;" class="dropdown-item notify-item" data-toggle="modal"
@@ -132,7 +122,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="control-label col-sm-2 align-self-center mb-0" for="pwd1">Class</label>
+                        <label class="control-label col-sm-2 align-self-center mb-0" for="pwd1">Lớp</label>
                         <div class="col-sm-10">
                             <input type="text" name="class" class="form-control" id="pwd1"
                                 placeholder="Enter name">

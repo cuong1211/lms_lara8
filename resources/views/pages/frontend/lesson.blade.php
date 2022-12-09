@@ -12,9 +12,9 @@
                             <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $course->name }}</a></li>
                         </ol>
                     </div>
-                    <h4 class="page-title">KHOÁ HỌC: {{ $course->name}}</h4>
-                    <h4 >LỚP: {{ $class_user[0]['classes']['name']}}</h4>
                 </div>
+                <h4 class="page-title">KHOÁ HỌC: {{ $course->name}}</h4>
+                <h4 >LỚP: {{ $class_user[0]['classes']['name']}}</h4>
             </div>
         </div>
         <!-- end page title -->

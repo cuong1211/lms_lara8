@@ -50,7 +50,7 @@ Route::group(['middleware'=> CheckLogin::class,'namespace' => 'frontend'], funct
 route::group(['Middleware'=>['web'],['api']], function () {
     route::get('/login', [LoginController::class, 'getLogin']);
     route::post('/login', [LoginController::class, 'postLogin']);
-    route::get('/logout', [LoginController::class, 'getLogout']);
+    route::get('/logout', [LoginController::class, 'getLogout'])->name('logout');
     //register
     route::get('admin/register', [RegisterController::class, 'getRegister']);
     route::post('admin/register', [RegisterController::class, 'postRegister']);

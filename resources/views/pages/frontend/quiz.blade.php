@@ -19,7 +19,7 @@
                                     <div class="row">
                                         <label class="form-check-label col-md-6" for="{{ $item2->id }}">
                                             <span>{{ $item2->answer }}</span> </label>
-                                        <input type="radio" id={{ $item2->id}} class="form-check-input col-md-6" name="{{ $item1->id }}"
+                                        <input type="radio" id={{ $item2->id}} class="form-check-input " name="{{ $item1->id }}"
                                             value="{{ $item2->id }}" {{ $j == 1 ? 'checked' : '' }}>
                                         <?php $j++; ?>
                                     </div> 

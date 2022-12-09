@@ -55,10 +55,13 @@
                             </a>
                         </div>
 
-
-                        <a href="{{ $zoom->join_url }}" target="_blank">
-                            <button type="button" class="btn btn-info">Vào lớp</button>
-                        </a>
+                        @if (isset($zoom->join_url))
+                            <a href="{{ $zoom->join_url }}" target="_blank">
+                                <button type="button" class="btn btn-info">Vào lớp</button>
+                            </a>
+                        @else
+                            
+                        @endif
 
                     </div> <!-- end card-body-->
 

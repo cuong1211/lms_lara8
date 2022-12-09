@@ -29,7 +29,7 @@
                     <h6 class="text-overflow m-0">Welcome !</h6>
                 </div>
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                <a href="{{route('logout')}}" class="dropdown-item notify-item">
                     <i class="mdi mdi-logout mr-1"></i>
                     <span>Logout</span>
                 </a>

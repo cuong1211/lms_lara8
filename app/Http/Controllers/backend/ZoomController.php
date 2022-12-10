@@ -10,6 +10,7 @@ use App\models\Zoom;
 use App\models\ZoomSupport;
 use Illuminate\Support\Facades\Http;
 use App\models\Course;
+use Yajra\Datatables\Datatables;
 
 
 class ZoomController extends Controller
@@ -44,19 +45,24 @@ class ZoomController extends Controller
     }
     public function getZoom()
     {
-        $zoom = Zoom::query()->get();
-        return view('pages.backend.zoom.main', compact('zoom'));
+        return view('pages.backend.zoom.main');
     }
-    public function getZoomSupport(){
-        $zoomsupport = ZoomSupport::query()->get();
-        return view('pages.backend.zoom.mainsupport',compact('zoomsupport'));
-    }
-
-    public function getCreate()
+    public function showZoom($id)
     {
-        return view('pages.backend.zoom.create');
+        switch ($id) {
+            case 'get-list':
+                $zoom = Zoom::query();
+                return Datatables::of($zoom)->make(true);
+                break;
+            default:
+                break;
+        }
     }
-
+    public function getZoomSupport()
+    {
+        $zoomsupport = ZoomSupport::query()->get();
+        return view('pages.backend.zoom.mainsupport', compact('zoomsupport'));
+    }
     public function postCreate(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -116,7 +122,23 @@ class ZoomController extends Controller
         //         ]
         //     ],
         // ]);
-        return redirect()->route('zoom.main');
+        if ($zoom) {
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Thêm thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Thêm thất bại'
+                ]
+            );
+        };
     }
     public function postCreatesupport(Request $request)
     {
@@ -146,19 +168,19 @@ class ZoomController extends Controller
                 'participant_video' => false,
                 'waiting_room' => false,
             ]
-        ])->body(),true);
+        ])->body(), true);
 
-            $zoomsupport = Zoom::create([
+        $zoomsupport = Zoom::create([
 
-                'id' => $response['id'],
-                'topic' => $response['topic'],
-                // 'class' => $request->class,
-                'type' => $response['type'],
-                'join_url' => $response['join_url'],
-                'start_time' => $response['start_time'],
-            ]); // add $data here
+            'id' => $response['id'],
+            'topic' => $response['topic'],
+            // 'class' => $request->class,
+            'type' => $response['type'],
+            'join_url' => $response['join_url'],
+            'start_time' => $response['start_time'],
+        ]); // add $data here
 
-            $zoomsupport->save();
+        $zoomsupport->save();
 
 
         // return [
@@ -168,7 +190,7 @@ class ZoomController extends Controller
         // dd($zoom);
 
 
-         Http::post('https://discord.com/api/webhooks/866854524618670100/O10m1gfjEQCrhG6PH5RggFrD2SR7Jv5ZZ1n5wmews_w9761YJA7R3d6rGp45J8PEsFGB', [
+        Http::post('https://discord.com/api/webhooks/866854524618670100/O10m1gfjEQCrhG6PH5RggFrD2SR7Jv5ZZ1n5wmews_w9761YJA7R3d6rGp45J8PEsFGB', [
             'content' => "Học sinh {$request->topic} có yêu cầu hỗ trợ",
             'embeds' => [
                 [
@@ -177,7 +199,7 @@ class ZoomController extends Controller
                     'description' => "Lớp: {$request->class}",
                     'color' => '7506394',
                     'footer' => [
-                        'text'=>'Được gửi từ hệ thống',
+                        'text' => 'Được gửi từ hệ thống',
                     ],
                     "timestamp" => $response['start_time'],
                 ]
@@ -242,11 +264,23 @@ class ZoomController extends Controller
         $path = 'meetings/' . $id;
         $response = $this->zoomDelete($path);
 
-        // return [
-        //     'success' => $response->status() === 204,
-        //     'data' => json_decode($response->body(), true),
-        // ];
-        return redirect('api/zoom');
+        if ($zoom) {
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xóa thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xóa thất bại'
+                ]
+            );
+        };
     }
     public function deleteSupport(Request $request, string $id)
     {

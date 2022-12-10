@@ -145,11 +145,11 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     //zoom  
     Route::get('/meeting',[ZoomController::class,'getList']);
     Route::get('/zoom',[ZoomController::class,'getZoom'])->name('zoom.main');
-    Route::get('/creatmeetings',[ZoomController::class,'getCreate']);
-    Route::post('/creatmeetings',[ZoomController::class,'postCreate']);
+    Route::get('/zoom/{id}',[ZoomController::class,'showZoom'])->name('zoom.show');
+    Route::post('/creatmeetings',[ZoomController::class,'postCreate'])->name('zoom.store');
     Route::get('/meeting/{id}',[ZoomController::class,'get'])->where('id', '[0-9]+');
-    Route::patch('/meeting/{id}',[ZoomController::class,'update'])->where('id', '[0-9]+');
-    Route::delete('/meeting/{id}',[ZoomController::class,'delete'])->where('id', '[0-9]+');
+    Route::patch('/meeting/{id}',[ZoomController::class,'update'])->where('id', '[0-9]+')->name('zoom.update');
+    Route::delete('/meeting/{id}',[ZoomController::class,'delete'])->where('id', '[0-9]+')->name('zoom.delete');
 
     //zoom support
     Route::get('/zoomsupport',[ZoomController::class,'getZoomSupport']);

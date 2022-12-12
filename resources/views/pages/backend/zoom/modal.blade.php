@@ -17,9 +17,9 @@
                         <label for="example-date">LOẠI PHÒNG</label>
                         <input class="form-control" type="text" name="type"value="1">
                     </div>
-                    <div class="form-group">
-                        <label for="example-date">THỜI GIAN BẮT ĐẦU</label>
-                        <input class="form-control" id="example-date" type="date" name="start_time">
+                    <div class="form-group" style="display:none">
+                        <label for="exampleInputdatetime">Thời gian bắt đầu</label>
+                        <input type="text" name="start_time" class="form-control" id="exampleInputdatetime">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -30,5 +30,17 @@
         </div>
     </div>
 </div>
-
-
+@push('jscustom')
+    <script>
+        var today = new Date();
+        var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        $(document).ready(function() {
+            $("button").click(function() {
+                $("#exampleInputdatetime:text").val(function(n, c) {
+                    return date + ' ' + time;
+                });
+            });
+        });
+    </script>
+@endpush

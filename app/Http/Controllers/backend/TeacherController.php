@@ -21,7 +21,7 @@ class TeacherController extends Controller
     public function showTeacher($id){
         switch ($id) {
             case 'get-list':
-                $teacher = User::query()->where('role_id',2);
+                $teacher = User::query()->where('role_id',2)->with('zoom');
                 return Datatables::of($teacher)->make(true);
                 break;
             default:

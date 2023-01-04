@@ -61,6 +61,7 @@
                 }
             }
         ],
+        
     });
 
     function form_reset() {
@@ -98,12 +99,12 @@
         var formData = new FormData(this);
         let data = $(this).serialize(),
             type = 'POST',
-            url = "{{ route('class.store',['course_id'=>"${course_id}"]) }}",
+            url = "{{ route('class.store', ['course_id' => "${course_id}"]) }}",
             id = $('form#modal_add input[name=id]').val();
         if (parseInt(id)) {
             console.log('edit');
             type = 'PUT';
-            url = "{{ route('class.update',['course_id'=>"${course_id}",'']) }}"+"/"+id;
+            url = "{{ route('class.update', ['course_id' => "${course_id}", '']) }}" + "/" + id;
         }
         $.ajax({
             url: url,
@@ -132,7 +133,7 @@
         let id = $(this).data('id');
         console.log($(this).data())
         $.ajax({
-            url: "{{ route('class.delete', ['course_id'=> "${course_id}",'']) }}" + '/' + id,
+            url: "{{ route('class.delete', ['course_id' => "${course_id}", '']) }}" + '/' + id,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

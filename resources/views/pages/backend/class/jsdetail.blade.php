@@ -1,4 +1,34 @@
 <script>
+    function updateDataTableSelectAllCtrl(table) {
+        var $table = table.table().node();
+        var $chkbox_all = $('tbody input[type="checkbox"]', $table);
+        var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        var chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
+
+        // If none of the checkboxes are checked
+        if ($chkbox_checked.length === 0) {
+            chkbox_select_all.checked = false;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If all of the checkboxes are checked
+        } else if ($chkbox_checked.length === $chkbox_all.length) {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If some of the checkboxes are checked
+        } else {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = true;
+            }
+        }
+    }
+
+    ids = [];
     var dt = $("#datatable").DataTable({
         serverSide: true,
         processing: true,
@@ -15,7 +45,7 @@
                 className: 'text-center',
                 render: function(data, type, row, meta) {
                     return '<input type="checkbox" name="ids[]" value="' + data +
-                        '" class="checkBoxClassAll  btn-checkbox">';
+                        '" class="checkBoxClassAll btn-checkbox ' + data + '">';
                 }
             },
             {
@@ -44,14 +74,29 @@
                 }
             }
         ],
+
     });
-    $(document).on('click', '.btn-checkbox', function() {
-        ids = [];
-        $('.checkBoxClassAll').each(function() {
-            if ($(this).is(':checked')) {
-                ids.push($(this).val());
-            }
-        });
+    dt.on('draw', function() {
+        // Update state of "Select all" control
+        for (var i = 0; i < ids.length; i++) {
+            console.log(ids[i]);
+            checkboxId = ids[i];
+            $('.' + checkboxId).attr('checked', true);
+        }
+    });
+
+    $(document).on('click', '.btn-checkbox', function(e) {
+
+        var checkBoxId = $(this).val();
+        var rowIndex = $.inArray(checkBoxId, ids);
+
+        if (this.checked && rowIndex === -1) {
+            ids.push(checkBoxId);
+
+        } else if (!this.checked && rowIndex !== -1) {
+            ids.splice(rowIndex, 1); // Remove it from the array.
+        }
+
         console.log(ids);
         if (ids.length > 0) {
             $('#btn-delete-all').show();
@@ -60,6 +105,7 @@
             $('#btn-delete-all').hide();
             $('.btn-add').show();
         }
+        updateDataTableSelectAllCtrl(dt);
     })
 
     function selectsall() {
@@ -92,6 +138,7 @@
         modal.find('input[name=id]').val({{ $class_id }});
         $('#centermodal').modal('show');
     });
+
     var dtadd = $("#datatable_user").DataTable({
         serverSide: true,
         processing: true,

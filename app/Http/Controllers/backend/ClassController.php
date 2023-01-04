@@ -190,8 +190,30 @@ class ClassController extends Controller
             );
         }
     }
-    public function postdeleteStudent(request $request, $course_id, $class_id)
+    public function deleteStudent($course_id, $class_id, $id){
+        $student = class_user::where('user_id', $id)->delete();
+        point::where('user_id', $id)->delete();
+        if ($student) {
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'title' => 'success',
+                    'content' => 'Xoá thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'title' => 'error',
+                    'content' => 'Xoá thất bại'
+                ]
+            );
+        };
+    }
+    public function postdeleteStudent(Request $request, $course_id, $class_id)
     {
+        // dd($request->all());
         $student_id_array = $request->ids;
         // dd($student_id_array);
         $student = class_user::whereIn('user_id', $student_id_array)->delete();

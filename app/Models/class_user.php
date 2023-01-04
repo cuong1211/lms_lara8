@@ -28,7 +28,7 @@ class class_user extends Model
   }
   public function homework_class()
   {
-    return $this->belongsTo(Homework_class::class);
+    return $this->hasMany('App\Models\Homework_class', 'class_id', 'class_id');
   }
   // public static function boot()
   // {

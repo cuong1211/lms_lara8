@@ -29,6 +29,7 @@
     }
 
     ids = [];
+    idstudent = [];
     var dt = $("#datatable").DataTable({
         serverSide: true,
         processing: true,
@@ -113,12 +114,31 @@
         var check_all = document.getElementById('check_all_box');
         if (check_all.checked) {
             for (var i = 0; i < checkboxes.length; i++) {
+                //check all checkbox and other pages
                 checkboxes[i].checked = true;
+                //push id to array
+                var checkBoxId = checkboxes[i].value;
+                var rowIndex = $.inArray(checkBoxId, ids);
+                if (rowIndex === -1) {
+                    ids.push(checkBoxId);
+                }
             }
+            $('#btn-delete-all').show();
+            $('.btn-add').hide();
+            updateDataTableSelectAllCtrl(dt);
         } else {
             for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = false;
+                //remove id to array
+                var checkBoxId = checkboxes[i].value;
+                var rowIndex = $.inArray(checkBoxId, ids);
+                if (rowIndex !== -1) {
+                    ids.splice(rowIndex, 1); // Remove it from the array.
+                }
             }
+            $('#btn-delete-all').hide();
+            $('.btn-add').show();
+            updateDataTableSelectAllCtrl(dt);
         }
     }
 
@@ -156,7 +176,7 @@
                 className: 'text-center',
                 render: function(data, type, row, meta) {
                     return '<input type="checkbox" name="ids[]" value="' + data +
-                        '" class="checkBoxClass">';
+                        '" class="checkBoxClass btn-checkboxstu ' + data + '">';
                 }
             },
             {
@@ -178,17 +198,53 @@
             },
         ],
     });
+    dtadd.on('draw', function() {
+        // Update state of "Select all" control
+        for (var i = 0; i < idstudent.length; i++) {
+            console.log(idstudent[i]);
+            checkboxId = idstudent[i];
+            $('.' + checkboxId).attr('checked', true);
+        }
+    });
+    $(document).on('click', '.btn-checkboxstu', function() {
+
+        var StudentId = $(this).val();
+        var rowIndexstudent = $.inArray(StudentId, idstudent);
+
+        if (this.checked && rowIndexstudent === -1) {
+            idstudent.push(StudentId);
+
+        } else if (!this.checked && rowIndexstudent !== -1) {
+            idstudent.splice(rowIndexstudent, 1); // Remove it from the array.
+        }
+
+        console.log(idstudent, rowIndexstudent);
+        updateDataTableSelectAllCtrl(dtadd);
+    })
 
     function selects() {
         var checkboxes = document.getElementsByClassName('checkBoxClass');
         var check_all = document.getElementById('check_all');
         if (check_all.checked) {
             for (var i = 0; i < checkboxes.length; i++) {
+                //check all checkbox and other pages
                 checkboxes[i].checked = true;
+                //push id to array
+                var checkBoxId = checkboxes[i].value;
+                var rowIndex = $.inArray(checkBoxId, idstudent);
+                if (rowIndex === -1) {
+                    idstudent.push(checkBoxId);
+                }
             }
         } else {
             for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = false;
+                //remove id to array
+                var checkBoxId = checkboxes[i].value;
+                var rowIndex = $.inArray(checkBoxId, idstudent);
+                if (rowIndex !== -1) {
+                    idstudent.splice(rowIndex, 1); // Remove it from the array.
+                }
             }
         }
     }
@@ -216,6 +272,7 @@
                     dtadd.ajax.reload(null, true);
                     $('#modal_add').trigger('reset');
                     $('#centermodal').modal('hide');
+                    idstudent = [];
                 }
             },
             error: function(data) {
@@ -228,7 +285,7 @@
         e.preventDefault();
         let id = $(this).data('id');
         $.ajax({
-            url: "{{ route('class.delete', ['course_id' => "${course_id}", '']) }}" + "/" + id,
+            url: "{{ route('class.deletestd', ['course_id' => "${course_id}", 'class_id'=>"${class_id}",'']) }}" +"/" +id,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -246,7 +303,6 @@
     });
     $(document).on('click', '#btn-delete-all', function(e) {
         e.preventDefault();
-        var ids = [];
         Swal.fire({
             text: "Bạn có muốn xoá các học sinh không?",
             icon: "warning",
@@ -260,12 +316,9 @@
             }
         }).then(function(result) {
             if (result.value) {
-                $('.checkBoxClassAll:checked').each(function() {
-                    ids.push($(this).val());
-                });
                 if (ids.length > 0) {
                     $.ajax({
-                        url: "{{ route('class.deletestudent', ['course_id' => "${course_id}", '']) }}" +
+                        url: "{{ route('class.deletestudent', ['course_id' => "${course_id}", 'class_id'=>"${class_id}",'']) }}" +
                             "/" +
                             ids,
                         headers: {
@@ -290,7 +343,7 @@
                         }
                     });
                 } else {
-                    alert('Vui lòng chọn ít nhất 1 bản ghi');
+                    toastr['error']('Vui lòng chọn học sinh cần xoá', 'Lỗi');
                 }
             }
         });

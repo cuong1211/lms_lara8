@@ -79,7 +79,8 @@ Route::group(['middleware' => checkAdminLogin::class, 'prefix' => 'admin', 'name
     route::get('course/{course_id}/class/{class_id}/show/{id}', [ClassController::class, 'showDetailClass'])->name('class.detail.show');
     route::get('course/{course_id}/class/addstudent/{class_id}/show/{id}', [ClassController::class, 'showaddStudent'])->name('class.addstudent.show');
     route::post('course/{course_id}/class/addstudent/{class_id}', [ClassController::class, 'postaddStudent'])->name('class.addstudent');
-    route::get('course/{course_id}/class/deletestudent/{class_id}', [ClassController::class, 'postdeleteStudent'])->name('class.deletestudent');
+    route::get('course/{course_id}/class/{class_id}/delete/{id}', [ClassController::class, 'deleteStudent'])->name('class.deletestd');
+    route::get('course/{course_id}/class/{class_id}/deletestudent/{id}', [ClassController::class, 'postdeleteStudent'])->name('class.deletestudent');
     
     //point
     route::get('course/{course_id}/class/{class_id}/point', [PointController::class, 'getPoint'])->name('point.main');

@@ -15,7 +15,6 @@
                         <th>STT</th>
                         <th>HỌC SINH</th>
                         <th>TRẠNG THÁI</th>
-                        <th>ĐIỂM</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,18 +36,6 @@
                                         <span class="alert alert-danger">CHƯA NỘP</span>
                                     @endif
                                 @endforeach
-                            </td>
-                            <td>
-                                @if ($item->user_id == $item2->user_id)
-                                    <form action="" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="user_id" value="{{ $item->user_id }}">
-                                        <input type="number" name="mark" value="{{ $item->mark }}">
-                                        <button type="submit" class="btn btn-primary">LƯU</button>
-                                    </form>
-                                @else
-                                    
-                                @endif
                             </td>
                         </tr>
                         @php

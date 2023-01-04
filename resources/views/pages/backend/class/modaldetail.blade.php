@@ -12,7 +12,7 @@
                     <table id="datatable_user" class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th style="text-align:center;"><input type="checkbox" id="check_all" onclick='selects()'></th>
+                                <th style="text-align:center;"><input type="checkbox" id="check_all" name="select_all" onclick='selects()'></th>
                                 <th>TÊN</th>
                                 <th>NGÀY SINH</th>
 

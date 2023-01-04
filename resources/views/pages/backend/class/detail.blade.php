@@ -48,7 +48,7 @@
             <table id="datatable" class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
-                        <th style="text-align:center;"><input type="checkbox" id="check_all_box" name="select_all" class="btn-checkbox" onclick='selectsall()'></th>
+                        <th style="text-align:center;"><input type="checkbox" id="check_all_box" name="select_all"  onclick='selectsall()'></th>
                         <th>Họ Tên</th>
                         <th>Ngày sinh</th>
                         <th>Action</th>

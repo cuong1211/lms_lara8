@@ -1,7 +1,7 @@
 <div class="left-side-menu">
 
     <!-- LOGO -->
-    <a href="{{url('/admin')}}" class="logo text-center logo-light">
+    <a href="{{ url('/admin') }}" class="logo text-center logo-light">
         <span class="logo-lg">
             <img src="assets/images/logo.png" alt="" height="16">
         </span>
@@ -15,6 +15,7 @@
 
         <!--- Sidemenu -->
         <ul class="metismenu side-nav">
+
             <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class="mdi mdi-semantic-web"></i>
@@ -22,48 +23,56 @@
                 </a>
                 <ul class="side-nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="{{url('/admin/course')}}">QUẢN LÝ</a>
+                        <a href="{{ url('/admin/course') }}">QUẢN LÝ</a>
                     </li>
                 </ul>
             </li>
+            @if (Auth::user()->role_id == 1)
+                <li class="side-nav-item">
+                    <a href="javascript: void(0);" class="side-nav-link">
+                        <i class=" mdi mdi-google-classroom"></i>
+                        <span> ZOOM </span>
+                    </a>
+                    <ul class="side-nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ url('/admin/zoom') }}">QUẢN LÝ</a>
+                        </li>
+                    </ul>
+                </li>
+            @else
+
+            @endif
+            @if (Auth::user()->role_id == 1)
+                <li class="side-nav-item">
+                    <a href="javascript: void(0);" class="side-nav-link">
+                        <i class="mdi mdi-human-male"></i>
+                        <span> NGƯỜI DÙNG </span>
+                    </a>
+                    <ul class="side-nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ url('/admin/user') }}">HỌC SINH</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('teacher.main') }}">GIÁO VIÊN</a>
+                        </li>
+                    </ul>
+                </li>
+            @else
+
+            @endif
             <li class="side-nav-item">
-                <a href="javascript: void(0);" class="side-nav-link">
-                    <i class=" mdi mdi-google-classroom"></i>
-                    <span> ZOOM </span>
-                </a>
-                <ul class="side-nav-second-level" aria-expanded="false">
-                    <li>
-                        <a href="{{url('/admin/zoom')}}">QUẢN LÝ</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="side-nav-item">
-                <a href="javascript: void(0);" class="side-nav-link">
-                    <i class="mdi mdi-human-male"></i>
-                    <span> NGƯỜI DÙNG </span>
-                </a>
-                <ul class="side-nav-second-level" aria-expanded="false">
-                    <li>
-                        <a href="{{url('/admin/user')}}">HỌC SINH</a>
-                    </li>
-                    <li>
-                        <a href="{{route('teacher.main')}}">GIÁO VIÊN</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{route('mark.index')}}" class="side-nav-link">
+                <a href="{{ route('mark.index') }}" class="side-nav-link">
                     <i class="mdi mdi-pencil-box-multiple"></i>
                     <span>CHẤM ĐIỂM</span>
                 </a>
             </li>
-                <a href="{{url('/admin/static')}}" class="side-nav-link">
-                    <i class="mdi mdi-chart-multiple"></i>
-                    <span> THỐNG KÊ </span>
-                </a>
-               
+            <a href="{{ url('/admin/static') }}" class="side-nav-link">
+                <i class="mdi mdi-chart-multiple"></i>
+                <span> THỐNG KÊ </span>
+            </a>
+
             </li>
-            
+
 
         </ul>
         <!-- End Sidebar -->

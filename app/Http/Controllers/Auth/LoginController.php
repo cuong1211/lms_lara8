@@ -55,7 +55,7 @@ class LoginController extends Controller
         }
         elseif (Auth::attempt($teacher)) {
             User::where('id', Auth::user()->id)->update(['status' => 1]);
-            return redirect('/teacher');
+            return redirect('/admin');
         }
         elseif (Auth::attempt($student)) {
             User::where('id', Auth::user()->id)->update(['status' => 1]);

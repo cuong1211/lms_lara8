@@ -29,20 +29,30 @@
                         $count = 1;
                         
                     @endphp
-                    @foreach ($class as $item)
+                    @if ($class->count() == 0)
                         <tr>
-                            <td>{{ $count }}</td>
-                            <td>{{$item->course->name}}</td>
-                            <td>{{$item->name}}</td>
-                            <td class="table-action">
-                                <a href="{{route('mark.class',['id'=>$item->id])}}" class="btn btn-primary">XEM</a>
-                            </td>
+                            <td colspan="4" class="text-center">Không có lớp</td>
                         </tr>
-                        
-                        @php
-                        $count++;
-                        @endphp
-                    @endforeach
+                    @else
+                        @foreach ($class as $item)
+                            <tr>
+                                <td>{{ $count }}</td>
+                                @if ($item->course->name !== null)
+                                    <td>{{ $item->course->name }}</td>
+                                @else
+                                    <td>Không có khoá học</td>
+                                @endif
+                                <td>{{ $item->name }}</td>
+                                <td class="table-action">
+                                    <a href="{{ route('mark.class', ['id' => $item->id]) }}" class="btn btn-primary">XEM</a>
+                                </td>
+                            </tr>
+
+                            @php
+                                $count++;
+                            @endphp
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

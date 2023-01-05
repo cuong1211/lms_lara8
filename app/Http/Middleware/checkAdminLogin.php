@@ -19,7 +19,7 @@ class checkAdminLogin
     {
         if(Auth::check()){
             $user = Auth::user();
-            if($user->role_id == 1){
+            if($user->role_id == 1 || $user->role_id == 2){
                 return $next($request);
             }else{
                 Auth::logout();
